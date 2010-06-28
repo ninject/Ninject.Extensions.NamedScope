@@ -17,7 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.NamedScope.TestTypes
+namespace Ninject.Extensions.NamedScope
 {
     using NUnit.Framework;
 

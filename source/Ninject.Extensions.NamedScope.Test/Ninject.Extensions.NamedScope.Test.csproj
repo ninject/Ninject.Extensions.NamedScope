@@ -64,7 +64,7 @@
     <Compile Include="TestTypes\Child.cs" />
     <Compile Include="TestTypes\Factory.cs" />
     <Compile Include="TestTypes\IFirstInterface.cs" />
-    <Compile Include="TestTypes\DisposeNotifyingObjectTest.cs" />
+    <Compile Include="DisposeNotifyingObjectTest.cs" />
     <Compile Include="TestTypes\GrandChild.cs" />
     <Compile Include="TestTypes\ISecondInterface.cs" />
     <Compile Include="TestTypes\MultiInterfaceClass.cs" />
