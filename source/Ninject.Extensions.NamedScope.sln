@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedScope", "Ninject.Extensions.NamedScope\Ninject.Extensions.NamedScope.csproj", "{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedScope.Test", "Ninject.Extensions.NamedScope.Test\Ninject.Extensions.NamedScope.Test.csproj", "{47619AA4-43FB-4424-8D0D-4020FA8FDC92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
