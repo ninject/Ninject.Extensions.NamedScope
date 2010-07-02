@@ -19,15 +19,15 @@
 
 namespace Ninject.Extensions.NamedScope
 {
+    using System;
     using Ninject.Extensions.ContextPreservation;
     using Ninject.Extensions.NamedScope.TestTypes;
-    using NUnit.Framework;
+    using Xunit;
 
     /// <summary>
     /// Integration tests for named scope together with context preservation.
     /// </summary>
-    [TestFixture]
-    public class NamedScopeContextPreservationIntegrationTest
+    public class NamedScopeContextPreservationIntegrationTest : IDisposable
     {
         /// <summary>
         /// The Name of the scope used in the tests.
@@ -38,12 +38,11 @@ namespace Ninject.Extensions.NamedScope
         /// The kernel used in the tests.
         /// </summary>
         private IKernel kernel;
-        
+
         /// <summary>
-        /// Creates the kernel.
+        /// Initializes a new instance of the <see cref="NamedScopeContextPreservationIntegrationTest"/> class.
         /// </summary>
-        [SetUp]
-        public void SetUp()
+        public NamedScopeContextPreservationIntegrationTest()
         {
             this.kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });
             this.kernel.Load(new NamedScopeModule());
@@ -53,8 +52,7 @@ namespace Ninject.Extensions.NamedScope
         /// <summary>
         /// Disposes the kernel.
         /// </summary>
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             this.kernel.Dispose();
         }
@@ -62,7 +60,7 @@ namespace Ninject.Extensions.NamedScope
         /// <summary>
         /// The named scope is passed to a new request by using <see cref="ContextPreservationModule"/>. 
         /// </summary>
-        [Test]
+        [Fact]
         public void NamedScopeOverResolutionRootBoundaries()
         {
             this.kernel.Bind<ParentWithFactory>().ToSelf().DefinesNamedScope(ScopeName);
@@ -77,21 +75,21 @@ namespace Ninject.Extensions.NamedScope
             var child3 = parent2.CreateChild();
             parent1.Dispose();
 
-            Assert.AreSame(child1.GrandChild, child2.GrandChild);
-            Assert.AreSame(child1.GrandChild, child2.GrandChild);
-            Assert.AreNotSame(child1.GrandChild, child3.GrandChild);
+            Assert.Same(child1.GrandChild, child2.GrandChild);
+            Assert.Same(child1.GrandChild, child2.GrandChild);
+            Assert.NotSame(child1.GrandChild, child3.GrandChild);
 
-            Assert.IsTrue(child1.GrandChild.IsDisposed);
-            Assert.IsFalse(child3.GrandChild.IsDisposed);
+            Assert.True(child1.GrandChild.IsDisposed);
+            Assert.False(child3.GrandChild.IsDisposed);
 
             parent2.Dispose();
-            Assert.IsTrue(child3.GrandChild.IsDisposed);
+            Assert.True(child3.GrandChild.IsDisposed);
         }
 
         /// <summary>
         /// Named scope supports scoping for multi interface classes
         /// </summary>
-        [Test]
+        [Fact]
         public void MultiInterfaceClassTest()
         {
             this.kernel.Bind<ParentWithMultiInterfaceClass>().ToSelf().DefinesNamedScope(ScopeName);
@@ -103,21 +101,21 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<ParentWithMultiInterfaceClass>();
             parent1.Dispose();
 
-            Assert.AreSame(parent1.FirstInterface, parent1.SecondInterface);
-            Assert.AreNotSame(parent1.FirstInterface, parent2.FirstInterface);
+            Assert.Same(parent1.FirstInterface, parent1.SecondInterface);
+            Assert.NotSame(parent1.FirstInterface, parent2.FirstInterface);
 
-            Assert.IsTrue((parent1.FirstInterface as DisposeNotifyingObject).IsDisposed);
-            Assert.IsFalse((parent2.FirstInterface as DisposeNotifyingObject).IsDisposed);
+            Assert.True((parent1.FirstInterface as DisposeNotifyingObject).IsDisposed);
+            Assert.False((parent2.FirstInterface as DisposeNotifyingObject).IsDisposed);
 
             parent2.Dispose();
-            Assert.IsTrue((parent2.FirstInterface as DisposeNotifyingObject).IsDisposed);
+            Assert.True((parent2.FirstInterface as DisposeNotifyingObject).IsDisposed);
         }
 
         /// <summary>
         /// When a binding tries to use an object that is disposed as scope a <see cref="ScopeDisposedException"/>
         /// is thrown.
         /// </summary>
-        [Test]
+        [Fact]
         public void DisposedScopeThrowsScopeDisposedException()
         {
             this.kernel.Bind<Factory>().ToSelf().DefinesNamedScope(ScopeName);

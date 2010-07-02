@@ -21,18 +21,17 @@ namespace Ninject.Extensions.NamedScope
 {
     using System;
     using Moq;
-    using NUnit.Framework;
+    using Xunit;
 
     /// <summary>
     /// Tests the implementation of <see cref="NamedScopeReference"/>.
     /// </summary>
-    [TestFixture]
     public class NamedScopeReferenceTest
     {
         /// <summary>
         /// When the scope reference is disposed the scope is disposed too.
         /// </summary>
-        [Test]
+        [Fact]
         public void DisposeDisposesTheReferencedScope()
         {
             var scopeMock = new Mock<IDisposable>();

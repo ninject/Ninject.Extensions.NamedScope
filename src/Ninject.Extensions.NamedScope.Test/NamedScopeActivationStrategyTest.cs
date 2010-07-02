@@ -24,19 +24,18 @@ namespace Ninject.Extensions.NamedScope
     using Moq;
     using Ninject.Activation;
     using Ninject.Parameters;
-    using NUnit.Framework;
+    using Xunit;
 
     /// <summary>
     /// Tests the implementation of <see cref="NamedScopeActivationStrategy"/>.
     /// </summary>
-    [TestFixture]
     public class NamedScopeActivationStrategyTest
     {
         /// <summary>
         /// The strategy creates a <see cref="NamedScopeReference"/> for each <see cref="NamedScopeParameter"/>
         /// using the kernel to create it. The scope of the newly created reference is the instance reference. 
         /// </summary>
-        [Test]
+        [Fact]
         public void ActivationCreatesNamedScopeReferenceUsingTheKernel()
         {
             var requestParameters = new List<IParameter>();
@@ -52,7 +51,7 @@ namespace Ninject.Extensions.NamedScope
             var testee = new NamedScopeActivationStrategy();
             testee.Activate(contextMock.Object, reference);
 
-            Assert.AreEqual(2, requestParameters.Count());
+            Assert.Equal(2, requestParameters.Count());
             AssertConstructorArgumentExists("scope", namedScopeParameter.Scope, requestParameters);
             AssertNamedScopeReferenceScopeParameterExists(reference.Instance, requestParameters);
         }
@@ -66,8 +65,8 @@ namespace Ninject.Extensions.NamedScope
         private static void AssertNamedScopeReferenceScopeParameterExists(object scope, IEnumerable<IParameter> requestParameters)
         {
             var parameter = requestParameters.OfType<NamedScopeReferenceScopeParameter>().SingleOrDefault();
-            Assert.IsNotNull(parameter);
-            Assert.AreEqual(scope, parameter.Scope);
+            Assert.NotNull(parameter);
+            Assert.Equal(scope, parameter.Scope);
         }
 
         /// <summary>
@@ -80,8 +79,8 @@ namespace Ninject.Extensions.NamedScope
         private static void AssertConstructorArgumentExists(string expectedName, object expectedValue, IEnumerable<IParameter> requestParameters)
         {
             var constructorArgument = requestParameters.OfType<ConstructorArgument>().Where(parameter => parameter.Name == expectedName).SingleOrDefault();
-            Assert.IsNotNull(constructorArgument);
-            Assert.AreEqual(expectedValue, constructorArgument.GetValue(new Mock<IContext>().Object));
+            Assert.NotNull(constructorArgument);
+            Assert.Equal(expectedValue, constructorArgument.GetValue(new Mock<IContext>().Object));
         }
 
         /// <summary>

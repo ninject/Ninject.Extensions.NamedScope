@@ -19,15 +19,15 @@
 
 namespace Ninject.Extensions.NamedScope
 {
+    using System;
     using Ninject;
     using Ninject.Extensions.NamedScope.TestTypes;
-    using NUnit.Framework;
+    using Xunit;
 
     /// <summary>
     /// Integration Test for Dependency Creation Module.
     /// </summary>
-    [TestFixture]
-    public class NameScopeTest
+    public class NameScopeTest : IDisposable
     {
         /// <summary>
         /// The Name of the scope used in the tests.
@@ -40,10 +40,9 @@ namespace Ninject.Extensions.NamedScope
         private IKernel kernel;
 
         /// <summary>
-        /// Creates the kernel.
+        /// Initializes a new instance of the <see cref="NameScopeTest"/> class.
         /// </summary>
-        [SetUp]
-        public void SetUp()
+        public NameScopeTest()
         {
             this.kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });
             this.kernel.Load(new NamedScopeModule());
@@ -52,8 +51,7 @@ namespace Ninject.Extensions.NamedScope
         /// <summary>
         /// Disposes the kernel.
         /// </summary>
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             this.kernel.Dispose();
         }
@@ -61,7 +59,7 @@ namespace Ninject.Extensions.NamedScope
         /// <summary>
         /// The life cycle of objects with Named Scope is the same as the object that defines the named scope.
         /// </summary>
-        [Test]
+        [Fact]
         public void NamedScopeLifeCycle()
         {
             this.kernel.Bind<Parent>().ToSelf().DefinesNamedScope(ScopeName);
@@ -72,21 +70,21 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
             
-            Assert.AreSame(parent1.GrandChild, parent1.FirstChild.GrandChild);
-            Assert.AreSame(parent1.GrandChild, parent1.SecondChild.GrandChild);
-            Assert.AreNotSame(parent1.GrandChild, parent2.GrandChild);
+            Assert.Same(parent1.GrandChild, parent1.FirstChild.GrandChild);
+            Assert.Same(parent1.GrandChild, parent1.SecondChild.GrandChild);
+            Assert.NotSame(parent1.GrandChild, parent2.GrandChild);
 
-            Assert.IsTrue(parent1.GrandChild.IsDisposed);
-            Assert.IsFalse(parent2.GrandChild.IsDisposed);
+            Assert.True(parent1.GrandChild.IsDisposed);
+            Assert.False(parent2.GrandChild.IsDisposed);
 
             parent2.Dispose();
-            Assert.IsTrue(parent2.GrandChild.IsDisposed);
+            Assert.True(parent2.GrandChild.IsDisposed);
         }
 
         /// <summary>
         /// Bindings with parent scope are disposed with their parents.
         /// </summary>
-        [Test]
+        [Fact]
         public void ParentScope()
         {
             this.kernel.Bind<Parent>().ToSelf();
@@ -97,26 +95,26 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
 
-            Assert.AreSame(parent1.FirstChild, parent1.SecondChild);
-            Assert.AreNotSame(parent1.GrandChild, parent1.FirstChild.GrandChild);
-            Assert.AreNotSame(parent1.FirstChild, parent2.FirstChild);
-            Assert.AreNotSame(parent1.GrandChild, parent2.GrandChild);
+            Assert.Same(parent1.FirstChild, parent1.SecondChild);
+            Assert.NotSame(parent1.GrandChild, parent1.FirstChild.GrandChild);
+            Assert.NotSame(parent1.FirstChild, parent2.FirstChild);
+            Assert.NotSame(parent1.GrandChild, parent2.GrandChild);
 
-            Assert.IsTrue(parent1.FirstChild.IsDisposed);
-            Assert.IsTrue(parent1.FirstChild.GrandChild.IsDisposed);
-            Assert.IsFalse(parent2.FirstChild.IsDisposed);
-            Assert.IsFalse(parent2.FirstChild.GrandChild.IsDisposed);
+            Assert.True(parent1.FirstChild.IsDisposed);
+            Assert.True(parent1.FirstChild.GrandChild.IsDisposed);
+            Assert.False(parent2.FirstChild.IsDisposed);
+            Assert.False(parent2.FirstChild.GrandChild.IsDisposed);
 
             parent2.Dispose();
-            Assert.IsTrue(parent2.FirstChild.IsDisposed);
-            Assert.IsTrue(parent2.FirstChild.GrandChild.IsDisposed);
+            Assert.True(parent2.FirstChild.IsDisposed);
+            Assert.True(parent2.FirstChild.GrandChild.IsDisposed);
         }
 
         /// <summary>
         /// If the scope of a binding is not found an <see cref="UnknownScopeException"/>
         /// is thrown.
         /// </summary>
-        [Test]
+        [Fact]
         public void UnknownScopeThrowsUnknownScopeException()
         {
             this.kernel.Bind<Parent>().ToSelf().DefinesNamedScope("SomeScopeName");

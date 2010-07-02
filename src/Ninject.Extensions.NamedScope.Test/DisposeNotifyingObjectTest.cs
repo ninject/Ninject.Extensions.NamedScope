@@ -19,41 +19,40 @@
 
 namespace Ninject.Extensions.NamedScope
 {
-    using NUnit.Framework;
+    using Xunit;
 
     /// <summary>
     /// Tests the implementation of <see cref="DisposeNotifyingObject"/>
     /// </summary>
-    [TestFixture]
     public class DisposeNotifyingObjectTest
     {
         /// <summary>
         /// Initially IsDispose returns <see langword="false"/>.
         /// </summary>
-        [Test]
+        [Fact]
         public void IsDisposedIsInitiallyFalse()
         {
             var testee = new DisposeNotifyingObject();
-            Assert.IsFalse(testee.IsDisposed);
+            Assert.False(testee.IsDisposed);
         }
 
         /// <summary>
         /// After the instance is disposed IsDispose returns <see langword="true"/>.
         /// </summary>
-        [Test]
+        [Fact]
         public void IsDisposedAfterDisposeIsTrue()
         {
             var testee = new DisposeNotifyingObject();
 
             testee.Dispose();
 
-            Assert.IsTrue(testee.IsDisposed);
+            Assert.True(testee.IsDisposed);
         }
 
         /// <summary>
         /// Disposed is fired when the object is disposed.
         /// </summary>
-        [Test]
+        [Fact]
         public void NotifiesWhenDisposed()
         {
             var disposed = false;
@@ -62,7 +61,7 @@ namespace Ninject.Extensions.NamedScope
 
             testee.Dispose();
 
-            Assert.IsTrue(disposed);
+            Assert.True(disposed);
         }
     }
 }
