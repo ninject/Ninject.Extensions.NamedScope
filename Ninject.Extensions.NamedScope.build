@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<project name="Ninject.Extensions.NamedScope" default="all">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project name="Ninject" default="all">
 	<include buildfile="Ninject.Extensions.NamedScope.include" />
 
 	<property name="version" value="1.0.0.0" overwrite="true"/>
@@ -17,8 +17,8 @@
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
 				<include name="System.Core.dll"/>
-				<include name="Ninject.dll"/>
 				<include name="System.Web.dll" unless="${build.platform == 'silverlight-2.0'}"/>
+				<include name="${path.lib}/Ninject/Ninject.dll"/>
 			</references>
 		</csc>
 	</target>
@@ -32,7 +32,7 @@
 		</copy>
 		<copy todir="${current.path.test}">
 			<fileset basedir="${path.tools.xunit}">
-				<include name="nunit.framework.dll"/>
+				<include name="xunit.dll"/>
 			</fileset>
 		</copy>
 		<copy todir="${current.path.test}" if="${string::contains(build.platform, 'silverlight')}">
@@ -45,15 +45,10 @@
 				<include name="Moq.dll"/>
 			</fileset>
 		</copy>
-		<copy todir="${current.path.test}/TestModules">
-			<fileset basedir="${path.src}/Ninject.Tests/TestModules">
-				<include name="Ninject.Tests.TestModule.dll"/>
-			</fileset>
-		</copy>
 		<csc noconfig="true" warnaserror="true" target="library" debug="${build.debug}" optimize="${build.optimize}" define="${build.defines}"
-         output="${current.path.test}/Ninject.Tests.dll">
+         output="${current.path.test}/Ninject.Extensions.NamedScope.Test.dll">
 			<sources basedir="${path.src}">
-				<include name="Ninject.Tests/**/*.cs"/>
+				<include name="Ninject.Extensions.NamedScope.Test/**/*.cs"/>
 			</sources>
 			<references basedir="${current.path.test}">
 				<include name="mscorlib.dll"/>
@@ -62,10 +57,10 @@
 				<include name="System.Web.dll"/>
 				<include name="Moq.dll" if="${not (string::contains(build.platform, 'silverlight'))}"/>
 				<include name="Moq.Silverlight.dll" if="${string::contains(build.platform, 'silverlight')}"/>
-				<include name="Castle.DynamicProxy-Silverlight.dll" if="${string::contains(build.platform, 'silverlight')}"/>
-				<include name="Castle.Core-Silverlight.dll" if="${string::contains(build.platform, 'silverlight')}"/>
-				<include name="nunit.framework.dll"/>
-				<include name="Ninject.dll"/>
+				<include name="xunit.dll"/>
+				<include name="${product.assembly}"/>
+				<include name="${path.lib}/Ninject/Ninject.dll"/>
+				<include name="${path.lib}/Ninject.Extensions.ContextPreservation/Ninject.Extensions.ContextPreservation.dll"/>
 			</references>
 			<nowarn>
 				<warning number="1584"/>

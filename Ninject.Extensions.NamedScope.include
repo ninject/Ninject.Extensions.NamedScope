@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <project name="NinjectIncludes">
 
 	<property name="path.base" value="${project::get-base-directory()}"/>
 	<property name="path.build" value="${path.base}/build"/>
-	<property name="path.dist" value="${path.base}/dist"/>
 	<property name="path.lib" value="${path.base}/lib"/>
+	<property name="path.dist" value="${path.base}/dist"/>
 	<property name="path.docs" value="${path.base}/docs"/>
 	<property name="path.src" value="${path.base}/src"/>
 	<property name="path.build.assemblyinfo" value="${path.src}/${build.asminfo}" dynamic="true"/>
@@ -16,13 +16,13 @@
 	<property name="path.tools.git" value="${path.tools}/git"/>
 
 	<property name="product.name" value="Ninject.Extensions.NamedScope" overwrite="false"/>
-	<property name="product.company" value="bbv Software Services Ag" overwrite="false"/>
+	<property name="product.company" value="bbv Software Services AG" overwrite="false"/>
 	<property name="product.duration" value="2009-2010" overwrite="false"/>
-	<property name="product.description" value="Lightweight dependency injection for .NET" overwrite="false"/>
-	<property name="product.keyfile" value="${product.name}.snk" overwrite="false"/>
+	<property name="product.description" value="Named Scope Extension for Ninject" overwrite="false"/>
+	<property name="product.keyfile" value="Ninject.snk" overwrite="false"/>
 	<property name="product.docfile" value="${product.name}.xml" overwrite="false"/>
 	<property name="product.assembly" value="${product.name}.dll" overwrite="false"/>
-	<property name="product.assembly.test" value="${product.name}.Tests.dll" overwrite="false"/>
+	<property name="product.assembly.test" value="${product.name}.Test.dll" overwrite="false"/>
 
 	<property name="version" value="1.0.0.0" overwrite="false"/>
 	<property name="version.major" value="${version::get-major(version::parse(version))}" dynamic="true"/>
@@ -106,7 +106,9 @@
 		<delete dir="${path.dist}" if="${directory::exists(path.dist)}"/>
 	</target>
 
-	<target name="create-assembly-info" depends="get-git-revision">
+	<!--depends="get-git-revision" -->
+	
+	<target name="create-assembly-info">
 		<echo message="##teamcity[buildNumber '${build.version}']" />
 		<asminfo output="${path.build.assemblyinfo}" language="CSharp">
 			<imports>
@@ -117,7 +119,7 @@
 			<attributes>
 				<attribute type="AssemblyProductAttribute" value="${product.name}: ${product.description}"/>
 				<attribute type="AssemblyCompanyAttribute" value="${product.company}"/>
-				<attribute type="AssemblyCopyrightAttribute" value="Copyright � ${product.duration} ${product.company} and contributors"/>
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright © ${product.duration} ${product.company}"/>
 				<attribute type="AssemblyVersionAttribute" value="${build.version}"/>
 				<attribute type="ComVisibleAttribute" value="false"/>
 				<attribute type="CLSCompliantAttribute" value="true"/>
@@ -134,12 +136,11 @@
 		<call target="config-platform-${build.platform}"/>
 
 		<property name="current.path.build" value="${path.build}/${build.platform}/${build.config}"/>
-		<property name="current.path.build.lib" value="${path.build}/${build.platform}/${build.config}/contrib"/>
+		<property name="current.path.build.lib" value="${path.build}/${build.platform}/${build.config}/lib"/>
 		<property name="current.path.test" value="${path.build}/${build.platform}/tests" />
 
 		<mkdir dir="${current.path.build}" if="${not(directory::exists(current.path.build))}"/>
 		<mkdir dir="${current.path.build.lib}" if="${not(directory::exists(current.path.build.lib))}"/>
-		<mkdir dir="${current.path.build.extensions}" if="${not(directory::exists(current.path.build.extensions))}"/>
 
 		<copy todir="${current.path.build}">
 			<fileset basedir="${path.base}">
@@ -248,7 +249,7 @@
 		<mkdir dir="${path.dist}" if="${not(directory::exists(path.dist))}"/>
 		<zip zipfile="${path.dist}\${product.name}-${build.version}-source.zip" ziplevel="9">
 			<fileset basedir="${path.base}">
-				<include name="contrib/*.*"/>
+				<include name="lib/*.*"/>
 				<include name="**/*.cs"/>
 				<include name="**/*.csproj"/>
 				<include name="**/*.sln"/>
