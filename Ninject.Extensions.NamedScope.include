@@ -148,10 +148,10 @@
 			</fileset>
 		</copy>
 		
-		<copy todir="${current.path.build.lib}">
+		<copy todir="${current.path.build.lib}" flatten="true">
 			<fileset basedir="${path.lib}">
-				<include name="*.dll"/>
-				<include name="*.xml"/>
+				<include name="**\*.dll"/>
+				<include name="**\*.xml"/>
 			</fileset>
 		</copy>
 		

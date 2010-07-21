@@ -18,7 +18,7 @@
 				<include name="System.dll"/>
 				<include name="System.Core.dll"/>
 				<include name="System.Web.dll" unless="${build.platform == 'silverlight-2.0'}"/>
-				<include name="${path.lib}/Ninject/Ninject.dll"/>
+				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
 			</references>
 		</csc>
 	</target>
@@ -54,13 +54,12 @@
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
 				<include name="System.Core.dll"/>
-				<include name="System.Web.dll"/>
 				<include name="Moq.dll" if="${not (string::contains(build.platform, 'silverlight'))}"/>
 				<include name="Moq.Silverlight.dll" if="${string::contains(build.platform, 'silverlight')}"/>
 				<include name="xunit.dll"/>
 				<include name="${product.assembly}"/>
-				<include name="${path.lib}/Ninject/Ninject.dll"/>
-				<include name="${path.lib}/Ninject.Extensions.ContextPreservation/Ninject.Extensions.ContextPreservation.dll"/>
+				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
+				<include name="${path.lib}/Ninject.Extensions.ContextPreservation/${build.platform}/Ninject.Extensions.ContextPreservation.dll"/>
 			</references>
 			<nowarn>
 				<warning number="1584"/>

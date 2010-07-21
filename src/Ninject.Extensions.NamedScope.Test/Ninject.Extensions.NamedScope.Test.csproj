@@ -37,13 +37,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\tools\moq\net-3.5\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=2.1.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+    <Reference Include="Ninject, Version=2.1.0.53, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Ninject\Ninject.dll</HintPath>
+      <HintPath>..\..\lib\Ninject\net-3.5\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject.Extensions.ContextPreservation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ninject.Extensions.ContextPreservation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Ninject.Extensions.ContextPreservation\Ninject.Extensions.ContextPreservation.dll</HintPath>
+      <HintPath>..\..\lib\Ninject.Extensions.ContextPreservation\net-3.5\Ninject.Extensions.ContextPreservation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -72,13 +72,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Ninject.snk" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Ninject.Extensions.NamedScope\Ninject.Extensions.NamedScope.csproj">
       <Project>{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}</Project>
       <Name>Ninject.Extensions.NamedScope</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Ninject.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

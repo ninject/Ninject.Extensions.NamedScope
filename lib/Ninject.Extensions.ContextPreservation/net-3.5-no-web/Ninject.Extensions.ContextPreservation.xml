@@ -4,29 +4,6 @@
         <name>Ninject.Extensions.ContextPreservation</name>
     </assembly>
     <members>
-        <member name="T:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRootActivationStrategy">
-            <summary>
-            Strategy for defining the parent context for <see cref="T:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRoot"/>.
-            </summary>
-        </member>
-        <member name="M:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRootActivationStrategy.Activate(Ninject.Activation.IContext,Ninject.Activation.InstanceReference)">
-            <summary>
-            Activates the specified context.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="reference">The reference.</param>
-        </member>
-        <member name="T:Ninject.Extensions.ContextPreservation.ContextPreservationModule">
-            <summary>
-            This module provides a <see cref="T:Ninject.Syntax.IResolutionRoot"/> binding that preserves the context.
-            New Get requests can access the context that was used to create the resolution root.
-            </summary>
-        </member>
-        <member name="M:Ninject.Extensions.ContextPreservation.ContextPreservationModule.Load">
-            <summary>
-            Loads this instance.
-            </summary>
-        </member>
         <member name="T:Ninject.Extensions.ContextPreservation.ContextPreservationExtensionMethods">
             <summary>
             Extension methods used for context preservation.
@@ -48,6 +25,17 @@
             <typeparam name="T">The binding to resolve.</typeparam>
             <param name="context">The context.</param>
             <returns>The resolved instance</returns>
+        </member>
+        <member name="T:Ninject.Extensions.ContextPreservation.ContextPreservationModule">
+            <summary>
+            This module provides a <see cref="T:Ninject.Syntax.IResolutionRoot"/> binding that preserves the context.
+            New Get requests can access the context that was used to create the resolution root.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.ContextPreservation.ContextPreservationModule.Load">
+            <summary>
+            Loads this instance.
+            </summary>
         </member>
         <member name="T:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRoot">
             <summary>
@@ -232,6 +220,18 @@
             Gets or sets a value indicating whether this instance is unique.
             </summary>
             <value><c>true</c> if this instance is unique; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRootActivationStrategy">
+            <summary>
+            Strategy for defining the parent context for <see cref="T:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRoot"/>.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRootActivationStrategy.Activate(Ninject.Activation.IContext,Ninject.Activation.InstanceReference)">
+            <summary>
+            Activates the specified context.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="reference">The reference.</param>
         </member>
     </members>
 </doc>
