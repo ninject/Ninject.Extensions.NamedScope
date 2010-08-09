@@ -135,6 +135,8 @@
 		<call target="config-build-${build.config}"/>
 		<call target="config-platform-${build.platform}"/>
 
+		<property name="current.path.ninject.lib" value="${path.lib}/Ninject/${build.platform}"/>
+		<property name="current.path.context.lib" value="${path.lib}/Ninject.Extensions.ContextPreservation/${build.platform}"/>
 		<property name="current.path.build" value="${path.build}/${build.platform}/${build.config}"/>
 		<property name="current.path.build.lib" value="${path.build}/${build.platform}/${build.config}/lib"/>
 		<property name="current.path.test" value="${path.build}/${build.platform}/tests" />
@@ -148,10 +150,17 @@
 			</fileset>
 		</copy>
 		
-		<copy todir="${current.path.build.lib}" flatten="true">
-			<fileset basedir="${path.lib}">
-				<include name="**\*.dll"/>
-				<include name="**\*.xml"/>
+		<copy todir="${current.path.build.lib}">
+			<fileset basedir="${current.path.ninject.lib}">
+				<include name="**/*.dll"/>
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${current.path.build.lib}">
+			<fileset basedir="${current.path.context.lib}">
+				<include name="**/*.dll"/>
+				<include name="**/*.xml"/>
 			</fileset>
 		</copy>
 		
@@ -230,7 +239,7 @@
 		<exec program="${path.tools.xunit.console}" workingdir="${current.path.test}" commandline="${product.assembly.test} /html ${current.path.test}/results.html" failonerror="true"/>
 		<if test="${not Is64BitOperatingSystem}">
 			<exec verbose="true" program="${path.tools.ncover}/ncover.console.exe" workingdir="${current.path.test}"
-				commandline="&quot;${path.tools.xunit.console}&quot; &quot;${product.assembly.test}&quot; //reg //w &quot;.&quot; //x &quot;coverage.xml&quot;"/>
+				commandline="&quot;${path.tools.xunit.console}&quot; &quot;${product.assembly.test}&quot; //reg //w &quot;.&quot; //x &quot;coverage.xml&quot;" />
 		</if>
 	</target>
 
