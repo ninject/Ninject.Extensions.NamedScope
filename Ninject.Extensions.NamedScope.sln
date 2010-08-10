@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedScope", "src\Ninject.Extensions.NamedScope\Ninject.Extensions.NamedScope.csproj", "{1B7349D1-821C-4429-9BA8-7D0F62C42EF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedScope.Test", "src\Ninject.Extensions.NamedScope.Test\Ninject.Extensions.NamedScope.Test.csproj", "{47619AA4-43FB-4424-8D0D-4020FA8FDC92}"
