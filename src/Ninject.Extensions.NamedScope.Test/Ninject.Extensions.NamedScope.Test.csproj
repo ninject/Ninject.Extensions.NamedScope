@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Ninject.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>../Ninject.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,9 +70,6 @@
     <Compile Include="TestTypes\ParentWithFactory.cs" />
     <Compile Include="TestTypes\ParentWithMultiInterfaceClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Ninject.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ninject.Extensions.NamedScope\Ninject.Extensions.NamedScope.csproj">
