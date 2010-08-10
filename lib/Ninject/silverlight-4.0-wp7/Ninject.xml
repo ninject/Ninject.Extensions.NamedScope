@@ -1356,11 +1356,6 @@
             A delegate that can inject values into a constructor.
             </summary>
         </member>
-        <member name="T:Ninject.Injection.DynamicMethodInjectorFactory">
-            <summary>
-            Creates injectors for members via <see cref="T:System.Reflection.Emit.DynamicMethod"/>s.
-            </summary>
-        </member>
         <member name="T:Ninject.Injection.IInjectorFactory">
             <summary>
             Creates injectors from members.
@@ -1381,27 +1376,6 @@
             <returns>The created injector.</returns>
         </member>
         <member name="M:Ninject.Injection.IInjectorFactory.Create(System.Reflection.MethodInfo)">
-            <summary>
-            Gets or creates an injector for the specified method.
-            </summary>
-            <param name="method">The method.</param>
-            <returns>The created injector.</returns>
-        </member>
-        <member name="M:Ninject.Injection.DynamicMethodInjectorFactory.Create(System.Reflection.ConstructorInfo)">
-            <summary>
-            Gets or creates an injector for the specified constructor.
-            </summary>
-            <param name="constructor">The constructor.</param>
-            <returns>The created injector.</returns>
-        </member>
-        <member name="M:Ninject.Injection.DynamicMethodInjectorFactory.Create(System.Reflection.PropertyInfo)">
-            <summary>
-            Gets or creates an injector for the specified property.
-            </summary>
-            <param name="property">The property.</param>
-            <returns>The created injector.</returns>
-        </member>
-        <member name="M:Ninject.Injection.DynamicMethodInjectorFactory.Create(System.Reflection.MethodInfo)">
             <summary>
             Gets or creates an injector for the specified method.
             </summary>
@@ -1444,60 +1418,6 @@
             <param name="method">The method.</param>
             <returns>The created injector.</returns>
         </member>
-        <member name="T:Ninject.Modules.CompiledModuleLoaderPlugin">
-            <summary>
-            Loads modules from compiled assemblies.
-            </summary>
-        </member>
-        <member name="T:Ninject.Modules.IModuleLoaderPlugin">
-            <summary>
-            Loads modules at runtime by searching external files.
-            </summary>
-        </member>
-        <member name="M:Ninject.Modules.IModuleLoaderPlugin.LoadModules(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads modules from the specified files.
-            </summary>
-            <param name="filenames">The names of the files to load modules from.</param>
-        </member>
-        <member name="P:Ninject.Modules.IModuleLoaderPlugin.SupportedExtensions">
-            <summary>
-            Gets the file extensions that the plugin understands how to load.
-            </summary>
-        </member>
-        <member name="M:Ninject.Modules.CompiledModuleLoaderPlugin.#ctor(Ninject.IKernel)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Ninject.Modules.CompiledModuleLoaderPlugin"/> class.
-            </summary>
-            <param name="kernel">The kernel into which modules will be loaded.</param>
-        </member>
-        <member name="M:Ninject.Modules.CompiledModuleLoaderPlugin.LoadModules(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads modules from the specified files.
-            </summary>
-            <param name="filenames">The names of the files to load modules from.</param>
-        </member>
-        <member name="P:Ninject.Modules.CompiledModuleLoaderPlugin.Kernel">
-            <summary>
-            Gets or sets the kernel into which modules will be loaded.
-            </summary>
-        </member>
-        <member name="P:Ninject.Modules.CompiledModuleLoaderPlugin.SupportedExtensions">
-            <summary>
-            Gets the file extensions that the plugin understands how to load.
-            </summary>
-        </member>
-        <member name="T:Ninject.Modules.IModuleLoader">
-            <summary>
-            Finds modules defined in external files.
-            </summary>
-        </member>
-        <member name="M:Ninject.Modules.IModuleLoader.LoadModules(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads any modules found in the files that match the specified patterns.
-            </summary>
-            <param name="patterns">The patterns to search.</param>
-        </member>
         <member name="T:Ninject.Modules.INinjectModule">
             <summary>
             A pluggable unit that can be loaded into an <see cref="T:Ninject.IKernel"/>.
@@ -1518,28 +1438,6 @@
         <member name="P:Ninject.Modules.INinjectModule.Name">
             <summary>
             Gets the module's name.
-            </summary>
-        </member>
-        <member name="T:Ninject.Modules.ModuleLoader">
-            <summary>
-            Automatically finds and loads modules from assemblies.
-            </summary>
-        </member>
-        <member name="M:Ninject.Modules.ModuleLoader.#ctor(Ninject.IKernel)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Ninject.Modules.ModuleLoader"/> class.
-            </summary>
-            <param name="kernel">The kernel into which modules will be loaded.</param>
-        </member>
-        <member name="M:Ninject.Modules.ModuleLoader.LoadModules(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads any modules found in the files that match the specified patterns.
-            </summary>
-            <param name="patterns">The patterns to search.</param>
-        </member>
-        <member name="P:Ninject.Modules.ModuleLoader.Kernel">
-            <summary>
-            Gets or sets the kernel into which modules will be loaded.
             </summary>
         </member>
         <member name="T:Ninject.Modules.NinjectModule">
@@ -3399,20 +3297,6 @@
             <param name="kernel">The kernel.</param>
             <param name="modules">The modules to load.</param>
         </member>
-        <member name="M:Ninject.ModuleLoadExtensions.Load(Ninject.IKernel,System.String[])">
-            <summary>
-            Loads modules from the files that match the specified pattern(s).
-            </summary>
-            <param name="kernel">The kernel.</param>
-            <param name="filePatterns">The file patterns (i.e. "*.dll", "modules/*.rb") to match.</param>
-        </member>
-        <member name="M:Ninject.ModuleLoadExtensions.Load(Ninject.IKernel,System.Reflection.Assembly[])">
-            <summary>
-            Loads modules defined in the specified assemblies.
-            </summary>
-            <param name="kernel">The kernel.</param>
-            <param name="assemblies">The assemblies to search.</param>
-        </member>
         <member name="T:Ninject.ResolutionExtensions">
             <summary>
             Extensions that enhance resolution of services.
@@ -3615,13 +3499,6 @@
             <param name="message">The exception message.</param>
             <param name="innerException">The inner exception.</param>
         </member>
-        <member name="M:Ninject.ActivationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Ninject.ActivationException"/> class.
-            </summary>
-            <param name="info">The serialized object data.</param>
-            <param name="context">The serialization context.</param>
-        </member>
         <member name="T:Ninject.IInitializable">
             <summary>
             A service that requires initialization after it is activated.
@@ -3655,18 +3532,6 @@
             Loads the module(s) into the kernel.
             </summary>
             <param name="modules">The modules to load.</param>
-        </member>
-        <member name="M:Ninject.IKernel.Load(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads modules from the files that match the specified pattern(s).
-            </summary>
-            <param name="filePatterns">The file patterns (i.e. "*.dll", "modules/*.rb") to match.</param>
-        </member>
-        <member name="M:Ninject.IKernel.Load(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Loads modules defined in the specified assemblies.
-            </summary>
-            <param name="assemblies">The assemblies to search.</param>
         </member>
         <member name="M:Ninject.IKernel.Unload(System.String)">
             <summary>
@@ -3740,27 +3605,6 @@
         <member name="P:Ninject.INinjectSettings.CachePruningInterval">
             <summary>
             Gets the interval at which the cache should be pruned.
-            </summary>
-        </member>
-        <member name="P:Ninject.INinjectSettings.LoadExtensions">
-            <summary>
-            Gets a value indicating whether the kernel should automatically load extensions at startup.
-            </summary>
-        </member>
-        <member name="P:Ninject.INinjectSettings.ExtensionSearchPattern">
-            <summary>
-            Gets the path that should be searched for extensions.
-            </summary>
-        </member>
-        <member name="P:Ninject.INinjectSettings.UseReflectionBasedInjection">
-            <summary>
-            Gets a value indicating whether Ninject should use reflection-based injection instead of
-            the (usually faster) lightweight code generation system.
-            </summary>
-        </member>
-        <member name="P:Ninject.INinjectSettings.InjectNonPublic">
-            <summary>
-            Gets a value indicating whether Ninject should inject non public members.
             </summary>
         </member>
         <member name="T:Ninject.IStartable">
@@ -3855,18 +3699,6 @@
             Loads the module(s) into the kernel.
             </summary>
             <param name="modules">The modules to load.</param>
-        </member>
-        <member name="M:Ninject.KernelBase.Load(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Loads modules from the files that match the specified pattern(s).
-            </summary>
-            <param name="filePatterns">The file patterns (i.e. "*.dll", "modules/*.rb") to match.</param>
-        </member>
-        <member name="M:Ninject.KernelBase.Load(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Loads modules defined in the specified assemblies.
-            </summary>
-            <param name="assemblies">The assemblies to search.</param>
         </member>
         <member name="M:Ninject.KernelBase.Unload(System.String)">
             <summary>
@@ -4021,27 +3853,6 @@
         <member name="P:Ninject.NinjectSettings.CachePruningInterval">
             <summary>
             Gets or sets the interval at which the GC should be polled.
-            </summary>
-        </member>
-        <member name="P:Ninject.NinjectSettings.LoadExtensions">
-            <summary>
-            Gets or sets a value indicating whether the kernel should automatically load extensions at startup.
-            </summary>
-        </member>
-        <member name="P:Ninject.NinjectSettings.ExtensionSearchPattern">
-            <summary>
-            Gets or sets the path that should be searched for extensions.
-            </summary>
-        </member>
-        <member name="P:Ninject.NinjectSettings.UseReflectionBasedInjection">
-            <summary>
-            Gets a value indicating whether Ninject should use reflection-based injection instead of
-            the (usually faster) lightweight code generation system.
-            </summary>
-        </member>
-        <member name="P:Ninject.NinjectSettings.InjectNonPublic">
-            <summary>
-            Gets a value indicating whether Ninject should inject non public members.
             </summary>
         </member>
         <member name="T:Ninject.StandardKernel">

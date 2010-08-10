@@ -1,8 +1,9 @@
-/source/_ReSharper.Ninject.Extensions.NamedScope*
 /build*
-/source/Ninject.Extensions.NamedScope.Test/obj*
-/source/Ninject.Extensions.NamedScope/obj*
-
-/source/Ninject.Extensions.NamedScope.5.0.ReSharper.user
-/source/Ninject.Extensions.NamedScope.5.1.TeamCity.user
-/source/Ninject.Extensions.NamedScope.suo
+/dist*
+/src/_ReSharper.Ninject.Extensions.NamedScope*
+/src/Ninject.Extensions.NamedScope.Test/obj*
+/src/Ninject.Extensions.NamedScope/obj*
+/_ReSharper.Ninject.Extensions.NamedScope*
+/Ninject.Extensions.NamedScope.5.0.ReSharper.user
+/Ninject.Extensions.NamedScope.5.1.TeamCity.user
+/Ninject.Extensions.NamedScope.suo

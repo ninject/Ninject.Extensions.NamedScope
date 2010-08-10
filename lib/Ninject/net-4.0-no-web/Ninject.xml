@@ -2364,7 +2364,19 @@
             </summary>
             <param name="action">The action callback.</param>
         </member>
+        <member name="M:Ninject.Syntax.IBindingOnSyntax`1.OnActivation(System.Action{Ninject.Activation.IContext,`0})">
+            <summary>
+            Indicates that the specified callback should be invoked when instances are activated.
+            </summary>
+            <param name="action">The action callback.</param>
+        </member>
         <member name="M:Ninject.Syntax.IBindingOnSyntax`1.OnDeactivation(System.Action{`0})">
+            <summary>
+            Indicates that the specified callback should be invoked when instances are deactivated.
+            </summary>
+            <param name="action">The action callback.</param>
+        </member>
+        <member name="M:Ninject.Syntax.IBindingOnSyntax`1.OnDeactivation(System.Action{Ninject.Activation.IContext,`0})">
             <summary>
             Indicates that the specified callback should be invoked when instances are deactivated.
             </summary>
@@ -2589,7 +2601,19 @@
             </summary>
             <param name="action">The action callback.</param>
         </member>
+        <member name="M:Ninject.Planning.Bindings.BindingBuilder`1.OnActivation(System.Action{Ninject.Activation.IContext,`0})">
+            <summary>
+            Indicates that the specified callback should be invoked when instances are activated.
+            </summary>
+            <param name="action">The action callback.</param>
+        </member>
         <member name="M:Ninject.Planning.Bindings.BindingBuilder`1.OnDeactivation(System.Action{`0})">
+            <summary>
+            Indicates that the specified callback should be invoked when instances are deactivated.
+            </summary>
+            <param name="action">The action callback.</param>
+        </member>
+        <member name="M:Ninject.Planning.Bindings.BindingBuilder`1.OnDeactivation(System.Action{Ninject.Activation.IContext,`0})">
             <summary>
             Indicates that the specified callback should be invoked when instances are deactivated.
             </summary>
