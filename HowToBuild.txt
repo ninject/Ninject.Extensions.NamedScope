@@ -1,0 +1,4 @@
+1. Copy the zipped ninject files to lib/Ninject
+2. Copy the zipped Ninject.Extensions.ContextPreservation files to lib/Ninject.Extensions.ContextPreservation
+3. Run UnzipDependencies.cmd
+4. Run build-release.cmd
