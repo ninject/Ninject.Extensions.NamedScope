@@ -2,7 +2,7 @@
 <project name="Ninject" default="all">
 	<include buildfile="Ninject.Extensions.NamedScope.include" />
 
-	<property name="version" value="1.0.0.0" overwrite="true"/>
+	<property name="version" value="2.1.0.0" overwrite="true"/>
 
 	<target name="all" depends="core test"/>
 

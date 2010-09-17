@@ -7,3 +7,7 @@
 /Ninject.Extensions.NamedScope.5.0.ReSharper.user
 /Ninject.Extensions.NamedScope.5.1.TeamCity.user
 /Ninject.Extensions.NamedScope.suo
+/lib/Ninject/*.zip
+/lib/Ninject/*/**
+/lib/Ninject.Extensions.ContextPreservation/*.zip
+/lib/Ninject.Extensions.ContextPreservation/*/**

@@ -106,9 +106,7 @@
 		<delete dir="${path.dist}" if="${directory::exists(path.dist)}"/>
 	</target>
 
-	<!--depends="get-git-revision" -->
-	
-	<target name="create-assembly-info">
+	<target name="create-assembly-info" depends="get-git-revision">
 		<echo message="##teamcity[buildNumber '${build.version}']" />
 		<asminfo output="${path.build.assemblyinfo}" language="CSharp">
 			<imports>

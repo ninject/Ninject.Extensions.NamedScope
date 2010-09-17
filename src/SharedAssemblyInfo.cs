@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProductAttribute("Ninject.Extensions.NamedScope: Named Scope Extension for Ninject")]
 [assembly: AssemblyCompanyAttribute("bbv Software Services AG")]
 [assembly: AssemblyCopyrightAttribute("Copyright © 2009-2010 bbv Software Services AG")]
-[assembly: AssemblyVersionAttribute("1.0.0.0")]
+[assembly: AssemblyVersionAttribute("2.1.0.13")]
 [assembly: ComVisibleAttribute(false)]
 [assembly: CLSCompliantAttribute(true)]
 
