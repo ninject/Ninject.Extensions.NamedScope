@@ -22,11 +22,28 @@ namespace Ninject.Extensions.NamedScope
     using System;
     using Ninject.Extensions.ContextPreservation;
     using Ninject.Extensions.NamedScope.TestTypes;
+#if SILVERLIGHT
+#if SILVERLIGHT_MSTEST
+    using MsTest.Should;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
+#else
+    using UnitDriven;
+    using UnitDriven.Should;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = UnitDriven.TestMethodAttribute;
+#endif
+#else
+    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
+    using Xunit.Should;
+#endif
 
     /// <summary>
     /// Integration tests for named scope together with context preservation.
     /// </summary>
+    [TestClass]
     public class NamedScopeContextPreservationIntegrationTest : IDisposable
     {
         /// <summary>
@@ -44,7 +61,20 @@ namespace Ninject.Extensions.NamedScope
         /// </summary>
         public NamedScopeContextPreservationIntegrationTest()
         {
+            this.SetUp();
+        }
+
+        /// <summary>
+        /// Sets up all tests.
+        /// </summary>
+        [TestInitialize]
+        public void SetUp()
+        {
+#if !SILVERLIGHT
             this.kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });
+#else
+            this.kernel = new StandardKernel();
+#endif
             this.kernel.Load(new NamedScopeModule());
             this.kernel.Load(new ContextPreservationModule());
         }
@@ -75,15 +105,14 @@ namespace Ninject.Extensions.NamedScope
             var child3 = parent2.CreateChild();
             parent1.Dispose();
 
-            Assert.Same(child1.GrandChild, child2.GrandChild);
-            Assert.Same(child1.GrandChild, child2.GrandChild);
-            Assert.NotSame(child1.GrandChild, child3.GrandChild);
+            child1.GrandChild.ShouldBeSameAs(child2.GrandChild);
+            child1.GrandChild.ShouldNotBeSameAs(child3.GrandChild);
 
-            Assert.True(child1.GrandChild.IsDisposed);
-            Assert.False(child3.GrandChild.IsDisposed);
+            child1.GrandChild.IsDisposed.ShouldBeTrue();
+            child3.GrandChild.IsDisposed.ShouldBeFalse();
 
             parent2.Dispose();
-            Assert.True(child3.GrandChild.IsDisposed);
+            child3.GrandChild.IsDisposed.ShouldBeTrue();
         }
 
         /// <summary>
@@ -101,14 +130,14 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<ParentWithMultiInterfaceClass>();
             parent1.Dispose();
 
-            Assert.Same(parent1.FirstInterface, parent1.SecondInterface);
-            Assert.NotSame(parent1.FirstInterface, parent2.FirstInterface);
+            parent1.FirstInterface.ShouldBeSameAs(parent1.SecondInterface);
+            parent1.FirstInterface.ShouldNotBeSameAs(parent2.FirstInterface);
 
-            Assert.True((parent1.FirstInterface as DisposeNotifyingObject).IsDisposed);
-            Assert.False((parent2.FirstInterface as DisposeNotifyingObject).IsDisposed);
+            (parent1.FirstInterface as DisposeNotifyingObject).IsDisposed.ShouldBeTrue();
+            (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.ShouldBeFalse();
 
             parent2.Dispose();
-            Assert.True((parent2.FirstInterface as DisposeNotifyingObject).IsDisposed);
+            (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.ShouldBeTrue();
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
-﻿//-------------------------------------------------------------------------------
-// <copyright file="MultiInterfaceClass.cs" company="bbv Software Services AG">
-//   Copyright (c) 2010 bbv Software Services AG
-//   Author: Remo Gloor remo.gloor@bbv.ch
+//-------------------------------------------------------------------------------
+// <copyright file="TestInitialize.cs" company="bbv Software Services AG">
+//   Copyright (c) 2008 bbv Software Services AG
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -17,12 +16,15 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.NamedScope.TestTypes
+namespace Ninject.Extensions.NamedScope.MSTestAttributes
 {
+    using System;
+
     /// <summary>
-    /// Test class with multiple interfaces.
+    /// Fake of the MSTest TestInitialize Attribute to reuse Tests for Silverlight.
     /// </summary>
-    public class MultiInterfaceClass : DisposeNotifyingObject, IFirstInterface, ISecondInterface
+    [AttributeUsage(AttributeTargets.Method)]
+    public class TestInitializeAttribute : Attribute
     {
     }
 }

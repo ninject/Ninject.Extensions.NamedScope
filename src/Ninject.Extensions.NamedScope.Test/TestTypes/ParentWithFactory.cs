@@ -22,7 +22,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// <summary>
     /// A parent that has a factory for creation of other objects.
     /// </summary>
-    internal class ParentWithFactory : DisposeNotifyingObject
+    public class ParentWithFactory : DisposeNotifyingObject
     {
         /// <summary>
         /// The factory.

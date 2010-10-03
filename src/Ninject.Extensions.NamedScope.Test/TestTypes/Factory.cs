@@ -24,7 +24,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// <summary>
     /// A factory class.
     /// </summary>
-    internal class Factory : DisposeNotifyingObject
+    public class Factory : DisposeNotifyingObject
     {
         /// <summary>
         /// The resolution root that is used to create new objects.

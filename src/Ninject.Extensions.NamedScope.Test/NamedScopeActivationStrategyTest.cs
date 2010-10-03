@@ -24,11 +24,28 @@ namespace Ninject.Extensions.NamedScope
     using Moq;
     using Ninject.Activation;
     using Ninject.Parameters;
+#if SILVERLIGHT
+#if SILVERLIGHT_MSTEST
+    using MsTest.Should;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
+#else
+    using UnitDriven;
+    using UnitDriven.Should;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = UnitDriven.TestMethodAttribute;
+#endif
+#else
+    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
+    using Xunit.Should;
+#endif
 
     /// <summary>
     /// Tests the implementation of <see cref="NamedScopeActivationStrategy"/>.
     /// </summary>
+    [TestClass]
     public class NamedScopeActivationStrategyTest
     {
         /// <summary>
@@ -51,7 +68,7 @@ namespace Ninject.Extensions.NamedScope
             var testee = new NamedScopeActivationStrategy();
             testee.Activate(contextMock.Object, reference);
 
-            Assert.Equal(2, requestParameters.Count());
+            requestParameters.Count().ShouldBe(2);
             AssertConstructorArgumentExists("scope", namedScopeParameter.Scope, requestParameters);
             AssertNamedScopeReferenceScopeParameterExists(reference.Instance, requestParameters);
         }
@@ -65,8 +82,9 @@ namespace Ninject.Extensions.NamedScope
         private static void AssertNamedScopeReferenceScopeParameterExists(object scope, IEnumerable<IParameter> requestParameters)
         {
             var parameter = requestParameters.OfType<NamedScopeReferenceScopeParameter>().SingleOrDefault();
-            Assert.NotNull(parameter);
-            Assert.Equal(scope, parameter.Scope);
+
+            parameter.ShouldNotBeNull();
+            parameter.Scope.ShouldBe(scope);
         }
 
         /// <summary>
@@ -79,8 +97,9 @@ namespace Ninject.Extensions.NamedScope
         private static void AssertConstructorArgumentExists(string expectedName, object expectedValue, IEnumerable<IParameter> requestParameters)
         {
             var constructorArgument = requestParameters.OfType<ConstructorArgument>().Where(parameter => parameter.Name == expectedName).SingleOrDefault();
-            Assert.NotNull(constructorArgument);
-            Assert.Equal(expectedValue, constructorArgument.GetValue(new Mock<IContext>().Object));
+            
+            constructorArgument.ShouldNotBeNull();
+            constructorArgument.GetValue(new Mock<IContext>().Object).ShouldBe(expectedValue);
         }
 
         /// <summary>

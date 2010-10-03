@@ -22,11 +22,28 @@ namespace Ninject.Extensions.NamedScope
     using System;
     using Ninject;
     using Ninject.Extensions.NamedScope.TestTypes;
+#if SILVERLIGHT
+#if SILVERLIGHT_MSTEST
+    using MsTest.Should;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
+#else
+    using UnitDriven;
+    using UnitDriven.Should;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = UnitDriven.TestMethodAttribute;
+#endif
+#else
+    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
+    using Xunit.Should;
+#endif
 
     /// <summary>
     /// Integration Test for Dependency Creation Module.
     /// </summary>
+    [TestClass]
     public class NameScopeTest : IDisposable
     {
         /// <summary>
@@ -44,7 +61,20 @@ namespace Ninject.Extensions.NamedScope
         /// </summary>
         public NameScopeTest()
         {
+            this.SetUp();
+        }
+
+        /// <summary>
+        /// Sets up all tests.
+        /// </summary>
+        [TestInitialize]
+        public void SetUp()
+        {
+#if !SILVERLIGHT
             this.kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });
+#else
+            this.kernel = new StandardKernel();
+#endif
             this.kernel.Load(new NamedScopeModule());
         }
 
@@ -69,16 +99,16 @@ namespace Ninject.Extensions.NamedScope
             var parent1 = this.kernel.Get<Parent>();
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
-            
-            Assert.Same(parent1.GrandChild, parent1.FirstChild.GrandChild);
-            Assert.Same(parent1.GrandChild, parent1.SecondChild.GrandChild);
-            Assert.NotSame(parent1.GrandChild, parent2.GrandChild);
 
-            Assert.True(parent1.GrandChild.IsDisposed);
-            Assert.False(parent2.GrandChild.IsDisposed);
+            parent1.GrandChild.ShouldBeSameAs(parent1.FirstChild.GrandChild);
+            parent1.GrandChild.ShouldBeSameAs(parent1.SecondChild.GrandChild);
+            parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
+
+            parent1.GrandChild.IsDisposed.ShouldBeTrue();
+            parent2.GrandChild.IsDisposed.ShouldBeFalse();
 
             parent2.Dispose();
-            Assert.True(parent2.GrandChild.IsDisposed);
+            parent2.GrandChild.IsDisposed.ShouldBeTrue();
         }
 
         /// <summary>
@@ -95,19 +125,19 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
 
-            Assert.Same(parent1.FirstChild, parent1.SecondChild);
-            Assert.NotSame(parent1.GrandChild, parent1.FirstChild.GrandChild);
-            Assert.NotSame(parent1.FirstChild, parent2.FirstChild);
-            Assert.NotSame(parent1.GrandChild, parent2.GrandChild);
+            parent1.FirstChild.ShouldBeSameAs(parent1.SecondChild);
+            parent1.GrandChild.ShouldNotBeSameAs(parent1.FirstChild.GrandChild);
+            parent1.FirstChild.ShouldNotBeSameAs(parent2.FirstChild);
+            parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
 
-            Assert.True(parent1.FirstChild.IsDisposed);
-            Assert.True(parent1.FirstChild.GrandChild.IsDisposed);
-            Assert.False(parent2.FirstChild.IsDisposed);
-            Assert.False(parent2.FirstChild.GrandChild.IsDisposed);
+            parent1.FirstChild.IsDisposed.ShouldBeTrue();
+            parent1.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
+            parent2.FirstChild.IsDisposed.ShouldBeFalse();
+            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeFalse();
 
             parent2.Dispose();
-            Assert.True(parent2.FirstChild.IsDisposed);
-            Assert.True(parent2.FirstChild.GrandChild.IsDisposed);
+            parent2.FirstChild.IsDisposed.ShouldBeTrue();
+            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
         }
 
         /// <summary>

@@ -19,11 +19,28 @@
 
 namespace Ninject.Extensions.NamedScope
 {
+#if SILVERLIGHT
+#if SILVERLIGHT_MSTEST
+    using MsTest.Should;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
+#else
+    using UnitDriven;
+    using UnitDriven.Should;
+    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Fact = UnitDriven.TestMethodAttribute;
+#endif
+#else
+    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
+    using Xunit.Should;
+#endif
 
     /// <summary>
     /// Tests the implementation of <see cref="DisposeNotifyingObject"/>
     /// </summary>
+    [TestClass]
     public class DisposeNotifyingObjectTest
     {
         /// <summary>
@@ -33,7 +50,7 @@ namespace Ninject.Extensions.NamedScope
         public void IsDisposedIsInitiallyFalse()
         {
             var testee = new DisposeNotifyingObject();
-            Assert.False(testee.IsDisposed);
+            testee.IsDisposed.ShouldBeFalse();
         }
 
         /// <summary>
@@ -46,7 +63,7 @@ namespace Ninject.Extensions.NamedScope
 
             testee.Dispose();
 
-            Assert.True(testee.IsDisposed);
+            testee.IsDisposed.ShouldBeTrue();
         }
 
         /// <summary>
@@ -61,7 +78,7 @@ namespace Ninject.Extensions.NamedScope
 
             testee.Dispose();
 
-            Assert.True(disposed);
+            disposed.ShouldBeTrue();
         }
     }
 }

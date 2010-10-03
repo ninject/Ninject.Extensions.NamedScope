@@ -22,7 +22,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// <summary>
     /// First test interface for a multi interface class.
     /// </summary>
-    internal interface IFirstInterface
+    public interface IFirstInterface
     {
     }
 }

@@ -22,7 +22,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// <summary>
     /// The parent used in the tests
     /// </summary>
-    internal class Parent : DisposeNotifyingObject
+    public class Parent : DisposeNotifyingObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Parent"/> class.

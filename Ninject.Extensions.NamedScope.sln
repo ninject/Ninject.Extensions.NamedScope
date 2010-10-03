@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedSco
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedScope.Test", "src\Ninject.Extensions.NamedScope.Test\Ninject.Extensions.NamedScope.Test.csproj", "{47619AA4-43FB-4424-8D0D-4020FA8FDC92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.Extensions.NamedScope.SilverlightTests", "src\Ninject.Extensions.NamedScope.SilverlightTests\Ninject.Extensions.NamedScope.SilverlightTests.csproj", "{EA49B9F7-0A3C-410D-B457-B20F9353C49C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47619AA4-43FB-4424-8D0D-4020FA8FDC92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA49B9F7-0A3C-410D-B457-B20F9353C49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA49B9F7-0A3C-410D-B457-B20F9353C49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA49B9F7-0A3C-410D-B457-B20F9353C49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA49B9F7-0A3C-410D-B457-B20F9353C49C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,7 +23,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// A parent class of a class with multiple interfaces.
     /// The parent has a reference to both interfaces.
     /// </summary>
-    internal class ParentWithMultiInterfaceClass : DisposeNotifyingObject
+    public class ParentWithMultiInterfaceClass : DisposeNotifyingObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ParentWithMultiInterfaceClass"/> class.

@@ -22,7 +22,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// <summary>
     /// Second test interface for a multi interface class.
     /// </summary>
-    internal interface ISecondInterface
+    public interface ISecondInterface
     {
     }
 }

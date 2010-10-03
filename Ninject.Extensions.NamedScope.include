@@ -14,6 +14,8 @@
 	<property name="path.tools.moq" value="${path.tools}/moq"/>
 	<property name="path.tools.ncover" value="${path.tools}/ncover"/>
 	<property name="path.tools.git" value="${path.tools}/git"/>
+	<property name="path.tools.statlight" value="${path.tools}/statlight/statlight.exe"/>
+	<property name="path.tools.unitdriven" value="${path.tools}/unitdriven"/>
 
 	<property name="product.name" value="Ninject.Extensions.NamedScope" overwrite="false"/>
 	<property name="product.company" value="bbv Software Services AG" overwrite="false"/>
@@ -23,6 +25,8 @@
 	<property name="product.docfile" value="${product.name}.xml" overwrite="false"/>
 	<property name="product.assembly" value="${product.name}.dll" overwrite="false"/>
 	<property name="product.assembly.test" value="${product.name}.Test.dll" overwrite="false"/>
+	<property name="product.assembly.silverlighttest" value="${product.name}.SilverlightTests.xap" overwrite="false"/>
+	<property name="product.assembly.silverlighttestdll" value="${product.name}.SilverlightTests.dll" overwrite="false"/>
 
 	<property name="version" value="1.0.0.0" overwrite="false"/>
 	<property name="version.major" value="${version::get-major(version::parse(version))}" dynamic="true"/>
@@ -36,6 +40,7 @@
 
 	<property name="package" value="false" readonly="false" overwrite="false"/>
 	<property name="skip.tests" value="false" readonly="false" overwrite="false"/>
+	<property name="skip.silverlightTests" value="false" readonly="false" overwrite="false"/>
 
 	<property name="Is64BitOperatingSystem" value="false" />
 	<property name="Is64BitProcess" value="false" />
@@ -117,7 +122,7 @@
 			<attributes>
 				<attribute type="AssemblyProductAttribute" value="${product.name}: ${product.description}"/>
 				<attribute type="AssemblyCompanyAttribute" value="${product.company}"/>
-				<attribute type="AssemblyCopyrightAttribute" value="Copyright © ${product.duration} ${product.company}"/>
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright © ${product.duration} ${product.company} and contributors"/>
 				<attribute type="AssemblyVersionAttribute" value="${build.version}"/>
 				<attribute type="ComVisibleAttribute" value="false"/>
 				<attribute type="CLSCompliantAttribute" value="true"/>
@@ -171,7 +176,7 @@
 	</target>
 
 	<target name="config-build-release">
-		<property name="build.debug" value="false"/>
+		<property name="build.debug" value="true"/>
 		<property name="build.optimize" value="true" overwrite="false"/>
 		<property name="global.build.defines" value="TRACE,STRONG"/>
 	</target>
@@ -233,7 +238,7 @@
 		<property name="build.defines" value="${global.build.defines},NET,NET_35,NO_WEB,MONO"/>
 	</target>
 	
-	<target name="test" depends="compile-tests" unless="${skip.tests}" if="${build.platform == 'net-3.5' or build.platform == 'net-4.0'}">
+	<target name="test" depends="compile-tests" unless="${skip.tests}" if="${not(string::contains(build.platform, 'silverlight') or build.platform == 'netcf-3.5' or build.platform == 'mono-2.0' or build.platform == 'mono-2.0-no-web')}">
 		<exec program="${path.tools.xunit.console}" workingdir="${current.path.test}" commandline="${product.assembly.test} /html ${current.path.test}/results.html" failonerror="true"/>
 		<if test="${not Is64BitOperatingSystem}">
 			<exec verbose="true" program="${path.tools.ncover}/ncover.console.exe" workingdir="${current.path.test}"
@@ -241,8 +246,10 @@
 		</if>
 	</target>
 
-	<target name="package-all" depends="all package-bin package-source" />
-	
+	<target name="silverlight-test" depends="compile-silverlight-tests" unless="${skip.tests or skip.silverlightTests}" if="${string::contains(build.platform, 'silverlight')}">
+		<exec program="${path.tools.statlight}" workingdir="${current.path.test}" commandline='-x"${product.assembly.silverlighttest}" -o=UnitDriven --teamcity' failonerror="true"/>
+	</target>
+
 	<target name="UnzipDependencies">
 		<foreach item="String" in="Ninject,Ninject.Extensions.ContextPreservation" delim="," property="dependency">
 			<foreach item="File" property="filepath">
@@ -258,24 +265,28 @@
 					
 					<unzip zipfile="${filepath}" todir="${path.lib}/${dependency}/${destinationDir}"/>
 				</do>
-			</foreach>	
-		</foreach>		
+			</foreach>
+		</foreach>
 	</target>
 	
+	<target name="package-all" depends="all package-bin package-source" />
+	
 	<target name="buildServerPlatforms">
-		<foreach item="String" in="net-3.5,net-3.5-no-web,net-4.0,net-4.0-no-web,silverlight-2.0,silverlight-3.0,silverlight-4.0,mono-2.0,mono-2.0-no-web,netcf-3.5" delim="," property="platform">
+		<foreach item="String" in="net-3.5,net-3.5-no-web,net-4.0,net-4.0-no-web,silverlight-4.0,silverlight-3.0,silverlight-2.0,mono-2.0,mono-2.0-no-web,netcf-3.5" delim="," property="platform">
 			<property name="build.platform" value="${platform}"/>
-			<call target="package-all"/>
+			<call target="package-bin"/>
 		</foreach>
+		<call target="package-source"/>
 	</target>
 
 	<target name="allPlatforms">
-		<foreach item="String" in="net-3.5,net-3.5-no-web,net-4.0,net-4.0-no-web,silverlight-2.0,silverlight-3.0,silverlight-4.0,silverlight-4.0-wp7,mono-2.0,mono-2.0-no-web,netcf-3.5" delim="," property="platform">
+		<foreach item="String" in="net-3.5,net-3.5-no-web,net-4.0,net-4.0-no-web,silverlight-4.0,silverlight-3.0,silverlight-2.0,silverlight-4.0-wp7,mono-2.0,mono-2.0-no-web,netcf-3.5" delim="," property="platform">
 			<property name="build.platform" value="${platform}"/>
-			<call target="package-all"/>
+			<call target="package-bin"/>
 		</foreach>
-	</target>		
-
+		<call target="package-source"/>
+	</target>
+	
 	<target name="package-bin" depends="all">
 		<mkdir dir="${path.dist}" if="${not(directory::exists(path.dist))}"/>
 		<zip zipfile="${path.dist}\${product.name}-${build.version}-${build.config}-${build.platform}.zip" ziplevel="9">
