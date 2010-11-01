@@ -1,4 +1,4 @@
-﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="Ninject.Extensions.NamedScope.SilverlightTests" EntryPointType="Ninject.Extensions.NamedScope.SilverlightTests.App" RuntimeVersion="4.0.50401.0">
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="Ninject.Extensions.NamedScope.SilverlightTests" EntryPointType="Ninject.Extensions.NamedScope.App" RuntimeVersion="4.0.50401.0">
   <Deployment.Parts>
     <AssemblyPart x:Name="Ninject.Extensions.NamedScope.SilverlightTests" Source="Ninject.Extensions.NamedScope.SilverlightTests.dll" />
     <AssemblyPart x:Name="Moq.Silverlight" Source="Moq.Silverlight.dll" />

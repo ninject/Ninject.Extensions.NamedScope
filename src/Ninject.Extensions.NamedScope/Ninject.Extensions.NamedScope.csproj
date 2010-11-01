@@ -53,6 +53,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\build\release\Ninject.Extensions.NamedScope.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject, Version=2.1.0.53, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">

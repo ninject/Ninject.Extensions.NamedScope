@@ -24,11 +24,11 @@ namespace Ninject.Extensions.NamedScope
 #if SILVERLIGHT
 #if SILVERLIGHT_MSTEST
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Assert = AssertWithThrows;
     using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
 #else
     using UnitDriven;
-    using Assert = Ninject.SilverlightTests.AssertWithThrows;
+    using Assert = AssertWithThrows;
     using Fact = UnitDriven.TestMethodAttribute;
 #endif
 #else
