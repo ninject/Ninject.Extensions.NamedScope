@@ -28,15 +28,23 @@ namespace Ninject.Extensions.NamedScope.TestTypes
         /// Initializes a new instance of the <see cref="Child"/> class.
         /// </summary>
         /// <param name="grandChild">The grand child.</param>
-        public Child(GrandChild grandChild)
+        /// <param name="grandChild2">The second grand child.</param>
+        public Child(IGrandChild grandChild, IGrandChild grandChild2)
         {
             this.GrandChild = grandChild;
+            this.GrandChild2 = grandChild2;
         }
 
         /// <summary>
         /// Gets the grand child.
         /// </summary>
         /// <value>The grand child.</value>
-        public GrandChild GrandChild { get; private set; }
+        public IGrandChild GrandChild { get; private set; }
+
+        /// <summary>
+        /// Gets the grand child.
+        /// </summary>
+        /// <value>The grand child.</value>
+        public IGrandChild GrandChild2 { get; private set; }
     }
 }

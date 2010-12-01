@@ -127,6 +127,9 @@
     <Compile Include="..\Ninject.Extensions.NamedScope.Test\TestTypes\IFirstInterface.cs">
       <Link>TestTypes\IFirstInterface.cs</Link>
     </Compile>
+    <Compile Include="..\Ninject.Extensions.NamedScope.Test\TestTypes\IGrandChild.cs">
+      <Link>TestTypes\IGrandChild.cs</Link>
+    </Compile>
     <Compile Include="..\Ninject.Extensions.NamedScope.Test\TestTypes\ISecondInterface.cs">
       <Link>TestTypes\ISecondInterface.cs</Link>
     </Compile>

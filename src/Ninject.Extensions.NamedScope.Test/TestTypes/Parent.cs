@@ -30,7 +30,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
         /// <param name="firstChild">The first child.</param>
         /// <param name="secondChild">The second child.</param>
         /// <param name="grandChild">The grand child.</param>
-        public Parent(Child firstChild, Child secondChild, GrandChild grandChild)
+        public Parent(Child firstChild, Child secondChild, IGrandChild grandChild)
         {
             this.FirstChild = firstChild;
             this.SecondChild = secondChild;
@@ -53,6 +53,6 @@ namespace Ninject.Extensions.NamedScope.TestTypes
         /// Gets the grand child.
         /// </summary>
         /// <value>The second child.</value>
-        public GrandChild GrandChild { get; private set; }
+        public IGrandChild GrandChild { get; private set; }
     }
 }

@@ -94,7 +94,7 @@ namespace Ninject.Extensions.NamedScope
         {
             this.kernel.Bind<Parent>().ToSelf().DefinesNamedScope(ScopeName);
             this.kernel.Bind<Child>().ToSelf().InTransientScope();
-            this.kernel.Bind<GrandChild>().ToSelf().InNamedScope(ScopeName);
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InNamedScope(ScopeName);
 
             var parent1 = this.kernel.Get<Parent>();
             var parent2 = this.kernel.Get<Parent>();
@@ -119,7 +119,7 @@ namespace Ninject.Extensions.NamedScope
         {
             this.kernel.Bind<Parent>().ToSelf();
             this.kernel.Bind<Child>().ToSelf().InParentScope();
-            this.kernel.Bind<GrandChild>().ToSelf().InParentScope();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InParentScope();
 
             var parent1 = this.kernel.Get<Parent>();
             var parent2 = this.kernel.Get<Parent>();
@@ -127,6 +127,35 @@ namespace Ninject.Extensions.NamedScope
 
             parent1.FirstChild.ShouldBeSameAs(parent1.SecondChild);
             parent1.GrandChild.ShouldNotBeSameAs(parent1.FirstChild.GrandChild);
+            parent1.FirstChild.ShouldNotBeSameAs(parent2.FirstChild);
+            parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
+
+            parent1.FirstChild.IsDisposed.ShouldBeTrue();
+            parent1.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
+            parent2.FirstChild.IsDisposed.ShouldBeFalse();
+            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeFalse();
+
+            parent2.Dispose();
+            parent2.FirstChild.IsDisposed.ShouldBeTrue();
+            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
+        }
+
+        /// <summary>
+        /// Bindings with parent scope are disposed with their parents.
+        /// </summary>
+        [Fact]
+        public void CallScope()
+        {
+            this.kernel.Bind<Parent>().ToSelf();
+            this.kernel.Bind<Child>().ToSelf().InCallScope();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InCallScope();
+
+            var parent1 = this.kernel.Get<Parent>();
+            var parent2 = this.kernel.Get<Parent>();
+            parent1.Dispose();
+
+            parent1.FirstChild.ShouldBeSameAs(parent1.SecondChild);
+            parent1.GrandChild.ShouldBeSameAs(parent1.FirstChild.GrandChild);
             parent1.FirstChild.ShouldNotBeSameAs(parent2.FirstChild);
             parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
 
@@ -149,7 +178,7 @@ namespace Ninject.Extensions.NamedScope
         {
             this.kernel.Bind<Parent>().ToSelf().DefinesNamedScope("SomeScopeName");
             this.kernel.Bind<Child>().ToSelf().InTransientScope();
-            this.kernel.Bind<GrandChild>().ToSelf().InNamedScope("AnotherScopeName");
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InNamedScope("AnotherScopeName");
 
             Assert.Throws<UnknownScopeException>(() => this.kernel.Get<Parent>());
         }

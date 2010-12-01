@@ -22,7 +22,7 @@ namespace Ninject.Extensions.NamedScope.TestTypes
     /// <summary>
     /// The grand child used in the tests.
     /// </summary>
-    public class GrandChild : DisposeNotifyingObject
+    public class GrandChild : DisposeNotifyingObject, IGrandChild
     {
     }
 }

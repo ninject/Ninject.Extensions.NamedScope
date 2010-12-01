@@ -53,15 +53,36 @@ namespace Ninject.Extensions.NamedScope
                     {
                         const string ScopeParameterName = "NamedScopeInParentScope";
                         var parentContext = context.Request.ParentContext;
-                        var namedScopeParameter = GetNamedScopeParameter(parentContext, ScopeParameterName);
-                        if (namedScopeParameter == null)
-                        {
-                            namedScopeParameter = new NamedScopeParameter(ScopeParameterName);
-                            parentContext.Parameters.Add(namedScopeParameter);
-                        }
-
-                        return namedScopeParameter.Scope;
+                        return GetOrAddScope(parentContext, ScopeParameterName);
                     });
+        }
+
+        /// <summary>
+        /// Defines that a binding is in the scope of its target.
+        /// </summary>
+        /// <typeparam name="T">The type of the binding.</typeparam>
+        /// <param name="syntax">The In syntax.</param>
+        /// <returns>The Named syntax.</returns>
+        public static IBindingNamedWithOrOnSyntax<T> InCallScope<T>(this IBindingInSyntax<T> syntax)
+        {
+            return syntax.InScope(
+                context =>
+                {
+                    const string ScopeParameterName = "NamedScopeInCallScope";
+                    var rootContext = context.Request.ParentContext ?? context;
+                    while (rootContext.Request.ParentContext != null &&
+                           !IsBindingActivated(rootContext.Request.ParentContext))
+                    {
+                        rootContext = rootContext.Request.ParentContext;
+                    }
+
+                    return GetOrAddScope(rootContext, ScopeParameterName);
+                });
+        }
+
+        private static bool IsBindingActivated(IContext context)
+        {
+            return context.Request.ActiveBindings.First() != context.Binding;
         }
 
         /// <summary>
@@ -117,6 +138,18 @@ namespace Ninject.Extensions.NamedScope
         private static NamedScopeParameter GetNamedScopeParameter(IContext context, string scopeParameterName)
         {
             return context.Parameters.OfType<NamedScopeParameter>().SingleOrDefault(parameter => parameter.Name == scopeParameterName);
+        }
+
+        private static object GetOrAddScope(IContext parentContext, string ScopeParameterName)
+        {
+            var namedScopeParameter = GetNamedScopeParameter(parentContext, ScopeParameterName);
+            if (namedScopeParameter == null)
+            {
+                namedScopeParameter = new NamedScopeParameter(ScopeParameterName);
+                parentContext.Parameters.Add(namedScopeParameter);
+            }
+
+            return namedScopeParameter.Scope;
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Ninject.Extensions.NamedScope
             this.kernel.Bind<ParentWithFactory>().ToSelf().DefinesNamedScope(ScopeName);
             this.kernel.Bind<Factory>().ToSelf().InTransientScope();
             this.kernel.Bind<Child>().ToSelf().InTransientScope();
-            this.kernel.Bind<GrandChild>().ToSelf().InNamedScope(ScopeName);
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InNamedScope(ScopeName);
 
             var parent1 = this.kernel.Get<ParentWithFactory>();
             var parent2 = this.kernel.Get<ParentWithFactory>();
@@ -149,12 +149,35 @@ namespace Ninject.Extensions.NamedScope
         {
             this.kernel.Bind<Factory>().ToSelf().DefinesNamedScope(ScopeName);
             this.kernel.Bind<Child>().ToSelf().InTransientScope();
-            this.kernel.Bind<GrandChild>().ToSelf().InNamedScope(ScopeName);
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InNamedScope(ScopeName);
 
             var factory = this.kernel.Get<Factory>();
             factory.Dispose();
 
             Assert.Throws<ScopeDisposedException>(() => factory.CreateChild());
+        }
+
+        /// <summary>
+        /// The call scope takes the object resolved by the last Get as scope. But ToMethod(ctx => ctx.ContextPreservingGet) 
+        /// is excluded. 
+        /// </summary>
+        [Fact]
+        public void CallScopeStopsAtResolutionRootBoundary()
+        {
+            this.kernel.Bind<ParentWithFactory>().ToSelf();
+            this.kernel.Bind<Factory>().ToSelf().InTransientScope();
+            this.kernel.Bind<Child>().ToSelf().InTransientScope();
+            this.kernel.BindInterfaceToBinding<IGrandChild, GrandChild>();
+            this.kernel.Bind<GrandChild>().ToSelf().InCallScope();
+
+            var parent = this.kernel.Get<ParentWithFactory>();
+            var child1 = parent.CreateChild();
+            var child2 = parent.CreateChild();
+            parent.Dispose();
+
+            child1.GrandChild.ShouldBeSameAs(child1.GrandChild2);
+            child1.GrandChild.ShouldNotBeSameAs(child2.GrandChild);
+            child1.GrandChild.IsDisposed.ShouldBeFalse();
         }
     }
 }
