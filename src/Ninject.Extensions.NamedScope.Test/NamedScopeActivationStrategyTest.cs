@@ -99,7 +99,7 @@ namespace Ninject.Extensions.NamedScope
             var constructorArgument = requestParameters.OfType<ConstructorArgument>().Where(parameter => parameter.Name == expectedName).SingleOrDefault();
             
             constructorArgument.ShouldNotBeNull();
-            constructorArgument.GetValue(new Mock<IContext>().Object).ShouldBe(expectedValue);
+            constructorArgument.GetValue(new Mock<IContext>().Object, null).ShouldBe(expectedValue);
         }
 
         /// <summary>
