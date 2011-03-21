@@ -23,7 +23,6 @@
 				<include name="mscorlib.dll"/>
 				<include name="System.dll"/>
 				<include name="System.Core.dll"/>
-				<include name="System.Web.dll" unless="${build.platform == 'silverlight-2.0'}"/>
 				<include name="${path.lib}/Ninject/${build.platform}/Ninject.dll"/>
 			</references>
 		</csc>
