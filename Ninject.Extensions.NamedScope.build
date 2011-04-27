@@ -11,7 +11,6 @@
 
 	<include buildfile="Ninject.include" />
 	<target name="all" depends="core test silverlight-test"/>
-	<target name="nuget-all" depends="nuget"/>
 
 	<target name="core" depends="init">
 		<csc noconfig="true" warnaserror="true" target="library" debug="${build.debug}" optimize="${build.optimize}" define="${build.defines}" output="${current.path.build}/${product.assembly}" doc="${current.path.build}/${product.docfile}" keyfile="${path.src}/${product.keyfile}">
@@ -113,7 +112,7 @@
 				<include name="System.Windows.dll"/>
 				<include name="System.Windows.Browser.dll"/>
 				<include name="System.Net.dll"/>
-				<include name="Moq.Silverlight.dll"/>
+				<include name="Moq.Silverlight.dll" unless="${string::contains(build.platform, 'wp7')}"/>
 				<include name="Castle.Core.dll" if="${string::contains(build.platform, 'silverlight-4.0')}"/>
 				<include name="Castle.Core-Silverlight.dll" unless="${string::contains(build.platform, 'silverlight-4.0')}"/>
 				<include name="Castle.DynamicProxy-Silverlight.dll" unless="${string::contains(build.platform, 'silverlight-4.0')}"/>

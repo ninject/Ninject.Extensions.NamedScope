@@ -17,6 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_MOQ
 namespace Ninject.Extensions.NamedScope
 {
     using System.Collections.Generic;
@@ -149,3 +150,4 @@ namespace Ninject.Extensions.NamedScope
         }
     }
 }
+#endif

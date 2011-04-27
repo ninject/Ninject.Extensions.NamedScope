@@ -17,6 +17,7 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+#if !NO_MOQ
 namespace Ninject.Extensions.NamedScope
 {
     using System;
@@ -57,3 +58,4 @@ namespace Ninject.Extensions.NamedScope
         }
     }
 }
+#endif
