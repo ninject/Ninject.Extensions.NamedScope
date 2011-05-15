@@ -22,28 +22,12 @@ namespace Ninject.Extensions.NamedScope
     using System;
     using Ninject.Extensions.ContextPreservation;
     using Ninject.Extensions.NamedScope.TestTypes;
-#if SILVERLIGHT
-#if SILVERLIGHT_MSTEST
-    using MsTest.Should;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Assert = AssertWithThrows;
-    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
-#else
-    using UnitDriven;
-    using UnitDriven.Should;
-    using Assert = AssertWithThrows;
-    using Fact = UnitDriven.TestMethodAttribute;
-#endif
-#else
-    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
     using Xunit.Should;
-#endif
 
     /// <summary>
     /// Integration tests for named scope together with context preservation.
     /// </summary>
-    [TestClass]
     public class NamedScopeContextPreservationIntegrationTest : IDisposable
     {
         /// <summary>
@@ -54,21 +38,12 @@ namespace Ninject.Extensions.NamedScope
         /// <summary>
         /// The kernel used in the tests.
         /// </summary>
-        private IKernel kernel;
+        private readonly IKernel kernel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedScopeContextPreservationIntegrationTest"/> class.
         /// </summary>
         public NamedScopeContextPreservationIntegrationTest()
-        {
-            this.SetUp();
-        }
-
-        /// <summary>
-        /// Sets up all tests.
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
         {
 #if !SILVERLIGHT
             this.kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });

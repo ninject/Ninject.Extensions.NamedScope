@@ -19,28 +19,12 @@
 
 namespace Ninject.Extensions.NamedScope
 {
-#if SILVERLIGHT
-#if SILVERLIGHT_MSTEST
-    using MsTest.Should;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Assert = AssertWithThrows;
-    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
-#else
-    using UnitDriven;
-    using UnitDriven.Should;
-    using Assert = AssertWithThrows;
-    using Fact = UnitDriven.TestMethodAttribute;
-#endif
-#else
-    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
     using Xunit.Should;
-#endif
 
     /// <summary>
     /// Tests the implementation of <see cref="DisposeNotifyingObject"/>
     /// </summary>
-    [TestClass]
     public class DisposeNotifyingObjectTest
     {
         /// <summary>

@@ -22,25 +22,11 @@ namespace Ninject.Extensions.NamedScope
 {
     using System;
     using Moq;
-#if SILVERLIGHT
-#if SILVERLIGHT_MSTEST
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Assert = AssertWithThrows;
-    using Fact = Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute;
-#else
-    using UnitDriven;
-    using Assert = AssertWithThrows;
-    using Fact = UnitDriven.TestMethodAttribute;
-#endif
-#else
-    using Ninject.Extensions.NamedScope.MSTestAttributes;
     using Xunit;
-#endif
 
     /// <summary>
     /// Tests the implementation of <see cref="NamedScopeReference"/>.
     /// </summary>
-    [TestClass]
     public class NamedScopeReferenceTest
     {
         /// <summary>
