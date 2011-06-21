@@ -19,9 +19,10 @@
 
 namespace Ninject.Extensions.NamedScope
 {
-    using Xunit;
-    using Xunit.Should;
+    using FluentAssertions;
 
+    using Xunit;
+    
     /// <summary>
     /// Tests the implementation of <see cref="DisposeNotifyingObject"/>
     /// </summary>
@@ -34,7 +35,7 @@ namespace Ninject.Extensions.NamedScope
         public void IsDisposedIsInitiallyFalse()
         {
             var testee = new DisposeNotifyingObject();
-            testee.IsDisposed.ShouldBeFalse();
+            testee.IsDisposed.Should().BeFalse();
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace Ninject.Extensions.NamedScope
 
             testee.Dispose();
 
-            testee.IsDisposed.ShouldBeTrue();
+            testee.IsDisposed.Should().BeTrue();
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Ninject.Extensions.NamedScope
 
             testee.Dispose();
 
-            disposed.ShouldBeTrue();
+            disposed.Should().BeTrue();
         }
     }
 }

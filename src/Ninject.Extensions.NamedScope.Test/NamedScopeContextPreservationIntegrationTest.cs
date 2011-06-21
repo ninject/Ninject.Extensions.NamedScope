@@ -20,11 +20,13 @@
 namespace Ninject.Extensions.NamedScope
 {
     using System;
+
+    using FluentAssertions;
+
     using Ninject.Extensions.ContextPreservation;
     using Ninject.Extensions.NamedScope.TestTypes;
     using Xunit;
-    using Xunit.Should;
-
+    
     /// <summary>
     /// Integration tests for named scope together with context preservation.
     /// </summary>
@@ -80,14 +82,14 @@ namespace Ninject.Extensions.NamedScope
             var child3 = parent2.CreateChild();
             parent1.Dispose();
 
-            child1.GrandChild.ShouldBeSameAs(child2.GrandChild);
-            child1.GrandChild.ShouldNotBeSameAs(child3.GrandChild);
+            child1.GrandChild.Should().BeSameAs(child2.GrandChild);
+            child1.GrandChild.Should().NotBeSameAs(child3.GrandChild);
 
-            child1.GrandChild.IsDisposed.ShouldBeTrue();
-            child3.GrandChild.IsDisposed.ShouldBeFalse();
+            child1.GrandChild.IsDisposed.Should().BeTrue();
+            child3.GrandChild.IsDisposed.Should().BeFalse();
 
             parent2.Dispose();
-            child3.GrandChild.IsDisposed.ShouldBeTrue();
+            child3.GrandChild.IsDisposed.Should().BeTrue();
         }
 
         /// <summary>
@@ -105,14 +107,14 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<ParentWithMultiInterfaceClass>();
             parent1.Dispose();
 
-            parent1.FirstInterface.ShouldBeSameAs(parent1.SecondInterface);
-            parent1.FirstInterface.ShouldNotBeSameAs(parent2.FirstInterface);
+            parent1.FirstInterface.Should().BeSameAs(parent1.SecondInterface);
+            parent1.FirstInterface.Should().NotBeSameAs(parent2.FirstInterface);
 
-            (parent1.FirstInterface as DisposeNotifyingObject).IsDisposed.ShouldBeTrue();
-            (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.ShouldBeFalse();
+            (parent1.FirstInterface as DisposeNotifyingObject).IsDisposed.Should().BeTrue();
+            (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.Should().BeFalse();
 
             parent2.Dispose();
-            (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.ShouldBeTrue();
+            (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.Should().BeTrue();
         }
 
         /// <summary>
@@ -150,9 +152,9 @@ namespace Ninject.Extensions.NamedScope
             var child2 = parent.CreateChild();
             parent.Dispose();
 
-            child1.GrandChild.ShouldBeSameAs(child1.GrandChild2);
-            child1.GrandChild.ShouldNotBeSameAs(child2.GrandChild);
-            child1.GrandChild.IsDisposed.ShouldBeFalse();
+            child1.GrandChild.Should().BeSameAs(child1.GrandChild2);
+            child1.GrandChild.Should().NotBeSameAs(child2.GrandChild);
+            child1.GrandChild.IsDisposed.Should().BeFalse();
         }
     }
 }

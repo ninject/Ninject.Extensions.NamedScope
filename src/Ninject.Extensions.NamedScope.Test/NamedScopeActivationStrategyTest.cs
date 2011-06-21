@@ -22,12 +22,14 @@ namespace Ninject.Extensions.NamedScope
 {
     using System.Collections.Generic;
     using System.Linq;
+
+    using FluentAssertions;
+
     using Moq;
     using Ninject.Activation;
     using Ninject.Parameters;
     using Xunit;
-    using Xunit.Should;
-
+    
     /// <summary>
     /// Tests the implementation of <see cref="NamedScopeActivationStrategy"/>.
     /// </summary>
@@ -53,7 +55,7 @@ namespace Ninject.Extensions.NamedScope
             var testee = new NamedScopeActivationStrategy();
             testee.Activate(contextMock.Object, reference);
 
-            requestParameters.Count().ShouldBe(2);
+            requestParameters.Count().Should().Be(2);
             AssertConstructorArgumentExists("scope", namedScopeParameter.Scope, requestParameters);
             AssertNamedScopeReferenceScopeParameterExists(reference.Instance, requestParameters);
         }
@@ -68,8 +70,8 @@ namespace Ninject.Extensions.NamedScope
         {
             var parameter = requestParameters.OfType<NamedScopeReferenceScopeParameter>().SingleOrDefault();
 
-            parameter.ShouldNotBeNull();
-            parameter.Scope.ShouldBe(scope);
+            parameter.Should().NotBeNull();
+            parameter.Scope.Should().Be(scope);
         }
 
         /// <summary>
@@ -82,9 +84,9 @@ namespace Ninject.Extensions.NamedScope
         private static void AssertConstructorArgumentExists(string expectedName, object expectedValue, IEnumerable<IParameter> requestParameters)
         {
             var constructorArgument = requestParameters.OfType<ConstructorArgument>().Where(parameter => parameter.Name == expectedName).SingleOrDefault();
-            
-            constructorArgument.ShouldNotBeNull();
-            constructorArgument.GetValue(new Mock<IContext>().Object, null).ShouldBe(expectedValue);
+
+            constructorArgument.Should().NotBeNull();
+            constructorArgument.GetValue(new Mock<IContext>().Object, null).Should().Be(expectedValue);
         }
 
         /// <summary>

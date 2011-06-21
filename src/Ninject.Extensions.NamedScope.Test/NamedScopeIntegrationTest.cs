@@ -20,10 +20,12 @@
 namespace Ninject.Extensions.NamedScope
 {
     using System;
+
+    using FluentAssertions;
+
     using Ninject;
     using Ninject.Extensions.NamedScope.TestTypes;
     using Xunit;
-    using Xunit.Should;
 
     /// <summary>
     /// Integration Test for Dependency Creation Module.
@@ -75,15 +77,15 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
 
-            parent1.GrandChild.ShouldBeSameAs(parent1.FirstChild.GrandChild);
-            parent1.GrandChild.ShouldBeSameAs(parent1.SecondChild.GrandChild);
-            parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
+            parent1.GrandChild.Should().BeSameAs(parent1.FirstChild.GrandChild);
+            parent1.GrandChild.Should().BeSameAs(parent1.SecondChild.GrandChild);
+            parent1.GrandChild.Should().NotBeSameAs(parent2.GrandChild);
 
-            parent1.GrandChild.IsDisposed.ShouldBeTrue();
-            parent2.GrandChild.IsDisposed.ShouldBeFalse();
+            parent1.GrandChild.IsDisposed.Should().BeTrue();
+            parent2.GrandChild.IsDisposed.Should().BeFalse();
 
             parent2.Dispose();
-            parent2.GrandChild.IsDisposed.ShouldBeTrue();
+            parent2.GrandChild.IsDisposed.Should().BeTrue();
         }
 
         /// <summary>
@@ -100,19 +102,19 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
 
-            parent1.FirstChild.ShouldBeSameAs(parent1.SecondChild);
-            parent1.GrandChild.ShouldNotBeSameAs(parent1.FirstChild.GrandChild);
-            parent1.FirstChild.ShouldNotBeSameAs(parent2.FirstChild);
-            parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
+            parent1.FirstChild.Should().BeSameAs(parent1.SecondChild);
+            parent1.GrandChild.Should().NotBeSameAs(parent1.FirstChild.GrandChild);
+            parent1.FirstChild.Should().NotBeSameAs(parent2.FirstChild);
+            parent1.GrandChild.Should().NotBeSameAs(parent2.GrandChild);
 
-            parent1.FirstChild.IsDisposed.ShouldBeTrue();
-            parent1.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
-            parent2.FirstChild.IsDisposed.ShouldBeFalse();
-            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeFalse();
+            parent1.FirstChild.IsDisposed.Should().BeTrue();
+            parent1.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
+            parent2.FirstChild.IsDisposed.Should().BeFalse();
+            parent2.FirstChild.GrandChild.IsDisposed.Should().BeFalse();
 
             parent2.Dispose();
-            parent2.FirstChild.IsDisposed.ShouldBeTrue();
-            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
+            parent2.FirstChild.IsDisposed.Should().BeTrue();
+            parent2.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
         }
 
         /// <summary>
@@ -129,19 +131,19 @@ namespace Ninject.Extensions.NamedScope
             var parent2 = this.kernel.Get<Parent>();
             parent1.Dispose();
 
-            parent1.FirstChild.ShouldBeSameAs(parent1.SecondChild);
-            parent1.GrandChild.ShouldBeSameAs(parent1.FirstChild.GrandChild);
-            parent1.FirstChild.ShouldNotBeSameAs(parent2.FirstChild);
-            parent1.GrandChild.ShouldNotBeSameAs(parent2.GrandChild);
+            parent1.FirstChild.Should().BeSameAs(parent1.SecondChild);
+            parent1.GrandChild.Should().BeSameAs(parent1.FirstChild.GrandChild);
+            parent1.FirstChild.Should().NotBeSameAs(parent2.FirstChild);
+            parent1.GrandChild.Should().NotBeSameAs(parent2.GrandChild);
 
-            parent1.FirstChild.IsDisposed.ShouldBeTrue();
-            parent1.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
-            parent2.FirstChild.IsDisposed.ShouldBeFalse();
-            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeFalse();
+            parent1.FirstChild.IsDisposed.Should().BeTrue();
+            parent1.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
+            parent2.FirstChild.IsDisposed.Should().BeFalse();
+            parent2.FirstChild.GrandChild.IsDisposed.Should().BeFalse();
 
             parent2.Dispose();
-            parent2.FirstChild.IsDisposed.ShouldBeTrue();
-            parent2.FirstChild.GrandChild.IsDisposed.ShouldBeTrue();
+            parent2.FirstChild.IsDisposed.Should().BeTrue();
+            parent2.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
         }
 
         /// <summary>
