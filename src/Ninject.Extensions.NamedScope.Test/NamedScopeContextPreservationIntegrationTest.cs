@@ -92,6 +92,7 @@ namespace Ninject.Extensions.NamedScope
             child3.GrandChild.IsDisposed.Should().BeTrue();
         }
 
+#if !MONO_2_6
         /// <summary>
         /// Named scope supports scoping for multi interface classes
         /// </summary>
@@ -114,6 +115,7 @@ namespace Ninject.Extensions.NamedScope
             parent2.Dispose();
             (parent2.FirstInterface as DisposeNotifyingObject).IsDisposed.Should().BeTrue();
         }
+#endif
 
         /// <summary>
         /// When a binding tries to use an object that is disposed as scope a <see cref="ScopeDisposedException"/>
@@ -132,6 +134,7 @@ namespace Ninject.Extensions.NamedScope
             Assert.Throws<ScopeDisposedException>(() => factory.CreateChild());
         }
 
+#if !MONO_2_6
         /// <summary>
         /// The call scope takes the object resolved by the last Get as scope. But ToMethod(ctx => ctx.ContextPreservingGet) 
         /// is excluded. 
@@ -153,5 +156,6 @@ namespace Ninject.Extensions.NamedScope
             child1.GrandChild.Should().NotBeSameAs(child2.GrandChild);
             child1.GrandChild.IsDisposed.Should().BeFalse();
         }
+#endif
     }
 }
