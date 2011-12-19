@@ -99,9 +99,7 @@ namespace Ninject.Extensions.NamedScope
         public void MultiInterfaceClassTest()
         {
             this.kernel.Bind<ParentWithMultiInterfaceClass>().ToSelf().DefinesNamedScope(ScopeName);
-            this.kernel.Bind<MultiInterfaceClass>().ToSelf().InNamedScope(ScopeName);
-            this.kernel.BindInterfaceToBinding<IFirstInterface, MultiInterfaceClass>().InTransientScope();
-            this.kernel.BindInterfaceToBinding<ISecondInterface, MultiInterfaceClass>().InTransientScope();
+            this.kernel.Bind<IFirstInterface, ISecondInterface>().To<MultiInterfaceClass>().InNamedScope(ScopeName);
 
             var parent1 = this.kernel.Get<ParentWithMultiInterfaceClass>();
             var parent2 = this.kernel.Get<ParentWithMultiInterfaceClass>();
@@ -144,8 +142,7 @@ namespace Ninject.Extensions.NamedScope
             this.kernel.Bind<ParentWithFactory>().ToSelf();
             this.kernel.Bind<Factory>().ToSelf().InTransientScope();
             this.kernel.Bind<Child>().ToSelf().InTransientScope();
-            this.kernel.BindInterfaceToBinding<IGrandChild, GrandChild>();
-            this.kernel.Bind<GrandChild>().ToSelf().InCallScope();
+            this.kernel.Bind<IGrandChild, GrandChild>().To<GrandChild>().InCallScope();
 
             var parent = this.kernel.Get<ParentWithFactory>();
             var child1 = parent.CreateChild();

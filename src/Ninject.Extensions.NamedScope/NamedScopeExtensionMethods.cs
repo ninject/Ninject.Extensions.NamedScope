@@ -93,8 +93,8 @@ namespace Ninject.Extensions.NamedScope
         /// <param name="scopeName">The name of the scope.</param>
         public static void DefinesNamedScope<T>(this IBindingOnSyntax<T> syntax, string scopeName)
         {
-            var callback = syntax.Binding.ProviderCallback;
-            syntax.Binding.ProviderCallback =
+            var callback = syntax.BindingConfiguration.ProviderCallback;
+            syntax.BindingConfiguration.ProviderCallback =
                 context =>
                     {
                         context.Parameters.Add(new NamedScopeParameter(scopeName));
