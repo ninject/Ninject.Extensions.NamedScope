@@ -25,6 +25,7 @@ using System.Security;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Ninject.Extensions.NamedScope")]
+[assembly: AssemblyDescriptionAttribute("Extension for Ninject which allows bindings to define additional scope types.")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("858a102b-9882-4dc0-885c-2695e2de78e4")]
