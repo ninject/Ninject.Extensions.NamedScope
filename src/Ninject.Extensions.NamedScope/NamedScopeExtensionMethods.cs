@@ -80,11 +80,6 @@ namespace Ninject.Extensions.NamedScope
                 });
         }
 
-        private static bool IsBindingActivated(IContext context)
-        {
-            return context.Request.ActiveBindings.First() != context.Binding;
-        }
-
         /// <summary>
         /// Defines the a binding defines a named scope.
         /// </summary>
@@ -108,7 +103,9 @@ namespace Ninject.Extensions.NamedScope
         /// <param name="context">The context.</param>
         /// <param name="scopeParameterName">Name of the scope parameter.</param>
         /// <returns>The scope.</returns>
-        private static object GetScope(IContext context, string scopeParameterName)
+        /// <exception cref="ScopeDisposedException">Thrown when the scope is already disposed.</exception>
+        /// <exception cref="UnknownScopeException">Throw if no scope with the specified name exists in the current context.</exception>
+        public static object GetScope(IContext context, string scopeParameterName)
         {
             NamedScopeParameter namedScopeParameter = GetNamedScopeParameter(context, scopeParameterName);
             if (namedScopeParameter != null)
@@ -130,6 +127,27 @@ namespace Ninject.Extensions.NamedScope
         }
 
         /// <summary>
+        /// Creates a named scope with the specified name.
+        /// </summary>
+        /// <param name="resolutionRoot">The resolution root.</param>
+        /// <param name="scopeName">The name of the scope.</param>
+        /// <returns>A resolution root that represents the specified scope.</returns>
+        public static NamedScope CreateNamedScope(this IResolutionRoot resolutionRoot, string scopeName)
+        {
+            return resolutionRoot.Get<NamedScope>(new NamedScopeParameter(scopeName));
+        }
+
+        /// <summary>
+        /// Determines whether the binding of the specified context is currently activated.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns><c>true</c> if the binding of the specified context is currently activated; otherwise, <c>false</c>.</returns>
+        private static bool IsBindingActivated(IContext context)
+        {
+            return context.Request.ActiveBindings.First() != context.Binding;
+        }
+        
+        /// <summary>
         /// Gets a named scope parameter from a context.
         /// </summary>
         /// <param name="context">The context.</param>
@@ -140,12 +158,18 @@ namespace Ninject.Extensions.NamedScope
             return context.Parameters.OfType<NamedScopeParameter>().SingleOrDefault(parameter => parameter.Name == scopeParameterName);
         }
 
-        private static object GetOrAddScope(IContext parentContext, string ScopeParameterName)
+        /// <summary>
+        /// Gets the specified named scope or adds a scope with the specified name in case it does not exist yet.
+        /// </summary>
+        /// <param name="parentContext">The parent context.</param>
+        /// <param name="scopeParameterName">Name of the scope parameter.</param>
+        /// <returns>The requested scope.</returns>
+        private static object GetOrAddScope(IContext parentContext, string scopeParameterName)
         {
-            var namedScopeParameter = GetNamedScopeParameter(parentContext, ScopeParameterName);
+            var namedScopeParameter = GetNamedScopeParameter(parentContext, scopeParameterName);
             if (namedScopeParameter == null)
             {
-                namedScopeParameter = new NamedScopeParameter(ScopeParameterName);
+                namedScopeParameter = new NamedScopeParameter(scopeParameterName);
                 parentContext.Parameters.Add(namedScopeParameter);
             }
 

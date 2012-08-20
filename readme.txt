@@ -49,4 +49,17 @@ For the last two bindings the short form can be used
   
 InParentScope
 =============
-This is basically the same as InTransientScope() at least when it comes to the lifecycle and the decision which object is injected. As with InTransientScope a new instance is injected for each dependency. The difference to InTransientScope is that bindings with this scope will be deactivated after the object that gets the instnace injected is collected by the garbage collector. E.g. the container disposes the object when it is not used anymore.
+This is basically the same aas InTransientScope() at least when it comes to the lifecycle and the decision which object is injected. As with InTransientScope a new instance is injected for each dependency. The difference to InTransientScope is that bindings with this scope will be deactivated after the object that gets the instnace injected is collected by the garbage collector. E.g. the container disposes the object when it is not used anymore.e
+
+Create named scope
+==================
+The extension provides the functionallity to create a resolution root that is a named scope for all objects created by this resolution root. E.g.
+
+kernel.Bind<IFoo>().To<Foo>().InNamedScope("TheScopeName");
+kernel.Bind<IBar>().To<Bar>().InSingletonScope();
+
+IResolutionRoot scope = kernel.CreateNamedScope("TheScopeName");
+var foo = scope.Get<IFoo>();
+var bar = scope.Get<IBar>();
+
+In this case foo will life until scope is disposed, but bar will life until the kernel is disposed. This feature should usually be used for integration into frameworks that need to create several instances that should be disposed together. E.g. ASP.NET MVC or NServiceBus integration. For applications approach in the first chapter should be prefered.

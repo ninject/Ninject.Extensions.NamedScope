@@ -71,6 +71,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DisposeNotifyingObject.cs" />
+    <Compile Include="NamedScope.cs" />
     <Compile Include="NamedScopeActivationStrategy.cs" />
     <Compile Include="NamedScopeExtensionMethods.cs" />
     <Compile Include="NamedScopeModule.cs" />

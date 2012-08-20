@@ -153,5 +153,27 @@ namespace Ninject.Extensions.NamedScope
             child1.GrandChild.Should().NotBeSameAs(child2.GrandChild);
             child1.GrandChild.IsDisposed.Should().BeFalse();
         }
+
+        /// <summary>
+        /// CreateNamedScope can be used to create a named scope for objects requested by this
+        /// resolution root.
+        /// </summary>
+        [Fact]
+        public void CreateNamedScope()
+        {
+            this.kernel.Bind<Parent>().ToSelf();
+            this.kernel.Bind<Child>().ToSelf().InNamedScope(ScopeName);
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InNamedScope(ScopeName);
+
+            var scope = this.kernel.CreateNamedScope(ScopeName);
+
+            var parent = scope.Get<Parent>();
+            parent.FirstChild.Should().BeSameAs(parent.SecondChild);
+            parent.GrandChild.Should().BeSameAs(parent.FirstChild.GrandChild);
+
+            scope.Dispose();
+            parent.FirstChild.IsDisposed.Should().BeTrue();
+            parent.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
+        }
     }
 }
