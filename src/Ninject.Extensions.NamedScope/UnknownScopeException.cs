@@ -20,7 +20,6 @@
 namespace Ninject.Extensions.NamedScope
 {
     using System;
-    using System.Globalization;
 
     /// <summary>
     /// This exception is thrown when a binding requests a scope that is not defined in the current scope.
@@ -30,9 +29,9 @@ namespace Ninject.Extensions.NamedScope
         /// <summary>
         /// Initializes a new instance of the <see cref="UnknownScopeException"/> class.
         /// </summary>
-        /// <param name="scopeName">Name of the scope.</param>
-        public UnknownScopeException(string scopeName)
-            : base(string.Format(CultureInfo.InvariantCulture, "The scope {0} is not known in the current context.", scopeName))
+        /// <param name="message">Error message - detailed</param>
+        public UnknownScopeException(string message)
+            : base(message)
         {
         }
     }
