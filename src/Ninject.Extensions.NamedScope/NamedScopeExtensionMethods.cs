@@ -69,9 +69,8 @@ namespace Ninject.Extensions.NamedScope
                 context =>
                 {
                     const string ScopeParameterName = "NamedScopeInCallScope";
-                    var rootContext = context.Request.ParentContext ?? context;
-                    while (rootContext.Request.ParentContext != null &&
-                           !IsBindingActivated(rootContext.Request.ParentContext))
+                    var rootContext = context;
+                    while (!IsCurrentResolveRoot(rootContext) && rootContext.Request.ParentContext != null)
                     {
                         rootContext = rootContext.Request.ParentContext;
                     }
@@ -136,17 +135,12 @@ namespace Ninject.Extensions.NamedScope
         {
             return resolutionRoot.Get<NamedScope>(new NamedScopeParameter(scopeName));
         }
-
-        /// <summary>
-        /// Determines whether the binding of the specified context is currently activated.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns><c>true</c> if the binding of the specified context is currently activated; otherwise, <c>false</c>.</returns>
-        private static bool IsBindingActivated(IContext context)
-        {
-            return context.Request.ActiveBindings.First() != context.Binding;
-        }
         
+        private static bool IsCurrentResolveRoot(IContext context)
+        {
+            return context.Request.GetType().FullName == "Ninject.Extensions.ContextPreservation.ContextPreservingResolutionRoot+ContextPreservingRequest";
+        }
+
         /// <summary>
         /// Gets a named scope parameter from a context.
         /// </summary>

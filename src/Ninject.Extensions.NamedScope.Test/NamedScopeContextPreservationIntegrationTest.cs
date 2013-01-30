@@ -155,6 +155,29 @@ namespace Ninject.Extensions.NamedScope
         }
 
         /// <summary>
+        /// The call scope takes the object resolved by the last Get as scope. But ToMethod(ctx => ctx.ContextPreservingGet) 
+        /// is excluded. 
+        /// </summary>
+        [Fact]
+        public void CallScopeWorksOverFactories()
+        {
+            this.kernel.Bind<ParentWithFactoryFactory>().ToSelf();
+            this.kernel.Bind<FactoryFactory>().ToSelf().InTransientScope();
+            this.kernel.Bind<Factory>().ToSelf().InTransientScope();
+            this.kernel.Bind<Child>().ToSelf().InTransientScope();
+            this.kernel.Bind<IGrandChild, GrandChild>().To<GrandChild>().InCallScope();
+
+            var parent = this.kernel.Get<ParentWithFactoryFactory>();
+            var child1 = parent.CreateChild();
+            var child2 = parent.CreateChild();
+            parent.Dispose();
+
+            child1.GrandChild.Should().BeSameAs(child1.GrandChild2);
+            child1.GrandChild.Should().NotBeSameAs(child2.GrandChild);
+            child1.GrandChild.IsDisposed.Should().BeFalse();
+        }
+
+        /// <summary>
         /// CreateNamedScope can be used to create a named scope for objects requested by this
         /// resolution root.
         /// </summary>
