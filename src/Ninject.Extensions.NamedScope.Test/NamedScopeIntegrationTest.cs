@@ -147,6 +147,35 @@ namespace Ninject.Extensions.NamedScope
         }
 
         /// <summary>
+        /// Bindings with parent scope are disposed with their parents.
+        /// </summary>
+        [Fact]
+        public void CallScopeWithPropertyInjection()
+        {
+            this.kernel.Bind<ParentWithPropertyInjection>().ToSelf();
+            this.kernel.Bind<Child>().ToSelf().InCallScope();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>().InCallScope();
+
+            var parent1 = this.kernel.Get<ParentWithPropertyInjection>();
+            var parent2 = this.kernel.Get<ParentWithPropertyInjection>();
+            parent1.Dispose();
+
+            parent1.FirstChild.Should().BeSameAs(parent1.SecondChild);
+            parent1.GrandChild.Should().BeSameAs(parent1.FirstChild.GrandChild);
+            parent1.FirstChild.Should().NotBeSameAs(parent2.FirstChild);
+            parent1.GrandChild.Should().NotBeSameAs(parent2.GrandChild);
+
+            parent1.FirstChild.IsDisposed.Should().BeTrue();
+            parent1.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
+            parent2.FirstChild.IsDisposed.Should().BeFalse();
+            parent2.FirstChild.GrandChild.IsDisposed.Should().BeFalse();
+
+            parent2.Dispose();
+            parent2.FirstChild.IsDisposed.Should().BeTrue();
+            parent2.FirstChild.GrandChild.IsDisposed.Should().BeTrue();
+        }
+
+        /// <summary>
         /// If the scope of a binding is not found an <see cref="UnknownScopeException"/>
         /// is thrown.
         /// </summary>
