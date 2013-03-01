@@ -122,7 +122,7 @@ namespace Ninject.Extensions.NamedScope
                 return GetScope(context.Request.ParentContext, scopeParameterName);
             }
 
-            throw new UnknownScopeException(scopeParameterName);
+            throw new UnknownScopeException(ExceptionFormatter.CouldNotFindScope(context.Request, scopeParameterName));
         }
 
         /// <summary>
