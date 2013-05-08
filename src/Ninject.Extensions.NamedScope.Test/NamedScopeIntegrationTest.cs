@@ -188,5 +188,68 @@ namespace Ninject.Extensions.NamedScope
 
             Assert.Throws<UnknownScopeException>(() => this.kernel.Get<Parent>());
         }
+
+        [Fact]
+        public void GetNamedScope_WhenAvailable_ReturnsTheScope()
+        {
+            object scope = null;
+
+            this.kernel.Bind<Parent>().ToSelf().DefinesNamedScope(ScopeName);
+            this.kernel.Bind<Child>().ToSelf();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>()
+                .OnActivation((ctx, instance) => scope = ctx.GetNamedScope(ScopeName));
+
+            this.kernel.Get<Parent>();
+
+            scope.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void GetNamedScope_WhenAvailable_ThrowsAnException()
+        {
+            this.kernel.Bind<Parent>().ToSelf();
+            this.kernel.Bind<Child>().ToSelf();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>()
+                .OnActivation((ctx, instance) => 
+                {
+                    Action a = () => ctx.GetNamedScope(ScopeName);
+                    a.ShouldThrow<UnknownScopeException>();
+                });
+
+            this.kernel.Get<Parent>();
+        }
+
+        [Fact]
+        public void TryGetNamedScope_WhenAvailable_ReturnsTheScope()
+        {
+            object scope = null;
+
+            this.kernel.Bind<Parent>().ToSelf().DefinesNamedScope(ScopeName);
+            this.kernel.Bind<Child>().ToSelf();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>()
+                .OnActivation((ctx, instance) => scope = ctx.TryGetNamedScope(ScopeName));
+
+            this.kernel.Get<Parent>();
+
+            scope.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void TryGetNamedScope_WhenAvailable_ReturnsNull()
+        {
+            object scope = null;
+
+            this.kernel.Bind<Parent>().ToSelf();
+            this.kernel.Bind<Child>().ToSelf();
+            this.kernel.Bind<IGrandChild>().To<GrandChild>()
+                .OnActivation((ctx, instance) =>
+                {
+                    Action a = () => scope = ctx.TryGetNamedScope(ScopeName);
+                    a.ShouldNotThrow<UnknownScopeException>();
+                });
+
+            this.kernel.Get<Parent>();
+            scope.Should().BeNull();
+        }
     }
 }

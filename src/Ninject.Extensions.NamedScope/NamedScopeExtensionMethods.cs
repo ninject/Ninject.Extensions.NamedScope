@@ -37,7 +37,7 @@ namespace Ninject.Extensions.NamedScope
         /// <returns>The Named syntax.</returns>
         public static IBindingNamedWithOrOnSyntax<T> InNamedScope<T>(this IBindingInSyntax<T> syntax, string scopeParameterName)
         {
-            return syntax.InScope(context => GetScope(context, scopeParameterName));
+            return syntax.InScope(context => GetNamedScope(context, scopeParameterName));
         }
 
         /// <summary>
@@ -104,7 +104,25 @@ namespace Ninject.Extensions.NamedScope
         /// <returns>The scope.</returns>
         /// <exception cref="ScopeDisposedException">Thrown when the scope is already disposed.</exception>
         /// <exception cref="UnknownScopeException">Throw if no scope with the specified name exists in the current context.</exception>
-        public static object GetScope(IContext context, string scopeParameterName)
+        public static object GetNamedScope(this IContext context, string scopeParameterName)
+        {
+            object scope = context.TryGetNamedScope(scopeParameterName);
+            if (scope == null)
+            {
+                throw new UnknownScopeException(ExceptionFormatter.CouldNotFindScope(context.Request, scopeParameterName));
+            }
+
+            return scope;
+        }
+
+        /// <summary>
+        /// Tries to get a named scope from the request.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="scopeParameterName">Name of the scope parameter.</param>
+        /// <returns>The scope, null if not found.</returns>
+        /// <exception cref="ScopeDisposedException">Thrown when the scope is already disposed.</exception>
+        public static object TryGetNamedScope(this IContext context, string scopeParameterName)
         {
             NamedScopeParameter namedScopeParameter = GetNamedScopeParameter(context, scopeParameterName);
             if (namedScopeParameter != null)
@@ -114,15 +132,19 @@ namespace Ninject.Extensions.NamedScope
                     throw new ScopeDisposedException();
                 }
 
-                return namedScopeParameter.Scope;
+                {
+                    return namedScopeParameter.Scope;
+                }
             }
 
             if (context.Request.ParentContext != null)
             {
-                return GetScope(context.Request.ParentContext, scopeParameterName);
+                {
+                    return context.Request.ParentContext.TryGetNamedScope(scopeParameterName);
+                }
             }
 
-            throw new UnknownScopeException(ExceptionFormatter.CouldNotFindScope(context.Request, scopeParameterName));
+            return null;
         }
 
         /// <summary>
