@@ -42,6 +42,21 @@ namespace Ninject.Extensions.NamedScope
 
             scopeMock.Verify(scope => scope.Dispose());
         }
+
+        /// <summary>
+        /// When the scope reference is garbage collected the scope is not disposed.
+        /// </summary>
+        [Fact]
+        public void GarbageCollectDoesNotDisposeTheReferencedScope()
+        {
+            var scopeMock = new Mock<IDisposable>();
+            var testee = new NamedScopeReference(scopeMock.Object);
+            testee = null;
+
+            GC.Collect();
+
+            scopeMock.Verify(scope => scope.Dispose(), Times.Never());
+        }
     }
 }
 #endif
