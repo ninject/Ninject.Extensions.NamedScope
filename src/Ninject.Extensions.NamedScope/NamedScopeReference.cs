@@ -46,7 +46,8 @@ namespace Ninject.Extensions.NamedScope
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         public override void Dispose(bool disposing)
         {
-            this.scope.Dispose();
+            if (disposing)
+                this.scope.Dispose();
             base.Dispose(disposing);
         }
     }
