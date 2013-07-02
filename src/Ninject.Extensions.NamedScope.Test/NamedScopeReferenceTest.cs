@@ -21,6 +21,9 @@
 namespace Ninject.Extensions.NamedScope
 {
     using System;
+
+    using FluentAssertions;
+
     using Moq;
     using Xunit;
 
@@ -50,8 +53,9 @@ namespace Ninject.Extensions.NamedScope
         public void GarbageCollectDoesNotDisposeTheReferencedScope()
         {
             var scopeMock = new Mock<IDisposable>();
+
             var testee = new NamedScopeReference(scopeMock.Object);
-            testee = null;
+            testee.IsDisposed.Should().BeFalse();
 
             GC.Collect();
 
