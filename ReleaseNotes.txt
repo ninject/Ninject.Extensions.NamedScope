@@ -1,4 +1,4 @@
-Version 3.0.2
+Version 3.2.0
 ---------------
 Added: GetNamedScope extension method on IContext
 Added: TryGetNamedScope extension method on IContext
