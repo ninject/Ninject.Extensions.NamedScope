@@ -1,8 +1,0 @@
-Version 3.2.0
----------------
-Added: GetNamedScope extension method on IContext
-Added: TryGetNamedScope extension method on IContext
-
-Version 3.0.0.0
----------------
-Removed: No web builds. All builds are have not reference to web anymore

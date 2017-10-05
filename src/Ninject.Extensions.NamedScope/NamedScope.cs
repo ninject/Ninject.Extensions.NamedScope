@@ -1,21 +1,10 @@
-//-------------------------------------------------------------------------------
-// <copyright file="NamedScope.cs" company="bbv Software Services AG">
-//   Copyright (c) 2010-2012 bbv Software Services AG
-//   Author: Remo Gloor remo.gloor@bbv.ch
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
+// -------------------------------------------------------------------------------------------------
+// <copyright file="NamedScope.cs" company="Ninject Project Contributors">
+//   Copyright (c) 2010 bbv Software Services AG
+//   Copyright (c) 2011-2017 Ninject Project Contributors
+//   Licensed under the Apache License, Version 2.0.
 // </copyright>
-//-------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
 namespace Ninject.Extensions.NamedScope
 {
@@ -23,6 +12,7 @@ namespace Ninject.Extensions.NamedScope
     using System.Collections.Generic;
 
     using Ninject.Activation;
+    using Ninject.Infrastructure.Disposal;
     using Ninject.Parameters;
     using Ninject.Planning.Bindings;
     using Ninject.Syntax;
@@ -30,7 +20,7 @@ namespace Ninject.Extensions.NamedScope
     /// <summary>
     /// A resolution root that specifies a named scope.
     /// </summary>
-    public class NamedScope : DisposeNotifyingObject, IResolutionRoot
+    public class NamedScope : DisposableObject, IResolutionRoot
     {
         /// <summary>
         /// The decorated resolution root.
@@ -93,11 +83,20 @@ namespace Ninject.Extensions.NamedScope
         }
 
         /// <summary>
+        /// Injects the specified existing instance, without managing its lifecycle.
+        /// </summary>
+        /// <param name="instance">The instance to inject.</param>
+        /// <param name="parameters">The parameters to pass to the request.</param>
+        public void Inject(object instance, params IParameter[] parameters)
+        {
+            this.resolutionRoot.Inject(instance, parameters);
+        }
+
+        /// <summary>
         /// Deactivates and releases the specified instance if it is currently managed by Ninject.
         /// </summary>
         /// <param name="instance">The instance to release.</param>
         /// <returns><see langword="True"/> if the instance was found and released; otherwise <see langword="false"/>.</returns>
-        /// <remarks></remarks>
         public bool Release(object instance)
         {
             return this.resolutionRoot.Release(instance);

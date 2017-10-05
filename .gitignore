@@ -1,13 +1,4 @@
-/build*
-/dist*
+.vs
+bin
 obj
-Bin
-*.dotCover
-*.user
-*.suo
-/src/_ReSharper.Ninject.Extensions.NamedScope*
-/_ReSharper.Ninject.Extensions.NamedScope*
-/lib/Ninject/*.zip
-/lib/Ninject/*/**
-/lib/Ninject.Extensions.ContextPreservation/*.zip
-/lib/Ninject.Extensions.ContextPreservation/*/**
+TestResults
