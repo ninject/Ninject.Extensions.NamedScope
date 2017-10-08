@@ -25,7 +25,7 @@ cache:
   - '%LocalAppData%\NuGet\v3-cache -> **\*.csproj'
 
 before_build:
-  - nuget restore -Verbosity quiet
+  - dotnet restore --verbosity quiet
   - choco install opencover.portable
   - choco install codecov
 
@@ -33,8 +33,8 @@ build:
   verbosity: minimal
 
 test_script:
-  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\src\Ninject.Extensions.NamedScope.Test\bin\Release\net452\Ninject.Extensions.NamedScope.Test.dll -noshadow" -filter:"+[Ninject.Extensions.NamedScope]*" -output:".\Ninject.Extensions.NamedScope_coverage.xml"
-  - codecov -f "Ninject.Extensions.NamedScope_coverage.xml
+  - OpenCover.Console.exe -oldstyle -returntargetcode -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test --configuration Release --no-build src\Ninject.Extensions.NamedScope.Test" -filter:"+[Ninject.Extensions.NamedScope]*" -excludebyattribute:*.ExcludeFromCodeCoverage*;*.Obsolete* -output:"Ninject.Extensions.NamedScope_coverage.xml"
+  - codecov -f "Ninject.Extensions.NamedScope_coverage.xml"
 
 artifacts:
   - path: '**\*.nupkg'
