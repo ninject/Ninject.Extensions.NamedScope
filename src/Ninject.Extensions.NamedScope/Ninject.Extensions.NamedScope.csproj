@@ -14,7 +14,7 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>Ninject.Extensions.NamedScope</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
-    <PackageTags>Ninject;ioc;di;factory</PackageTags>
+    <PackageTags>Ninject;ioc;di;scope</PackageTags>
     <PackageProjectUrl>http://www.ninject.org/</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/ninject/Ninject.Extensions.NamedScope/blob/master/CHANGELOG.md</PackageReleaseNotes>
     <PackageIconUrl>https://github.com/ninject/ninject/raw/master/logos/Ninject-Logo32.png</PackageIconUrl>
