@@ -1,4 +1,4 @@
-# Ninject.Extensions.Factory
+# Ninject.Extensions.NamedScope
 
 [![Build status](https://ci.appveyor.com/api/projects/status/lg2gqoo5drnk1d5e?svg=true)](https://ci.appveyor.com/project/Ninject/ninject-extensions-namedscope)
 [![codecov](https://codecov.io/gh/ninject/Ninject.Extensions.NamedScope/branch/master/graph/badge.svg)](https://codecov.io/gh/ninject/Ninject.Extensions.NamedScope)
