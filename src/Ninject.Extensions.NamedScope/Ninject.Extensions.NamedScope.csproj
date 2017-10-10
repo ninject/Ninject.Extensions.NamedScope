@@ -7,7 +7,7 @@
     <Company>Ninject Project Contributors</Company>
     <Product>Named scope extension for Ninject</Product>
     <Description>Extension for Ninject which allows bindings to define additional scope types.</Description>
-    <Copyright>2010 bbv Software Services AG;2009-2017 Ninject Project Contributors</Copyright>
+    <Copyright>2010 bbv Software Services AG;2011-2017 Ninject Project Contributors</Copyright>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>..\Ninject.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
