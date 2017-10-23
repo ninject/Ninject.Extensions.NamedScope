@@ -1,5 +1,5 @@
-// -------------------------------------------------------------------------------------------------
-// <copyright file="DisposeNotifyingObject.cs" company="Ninject Project Contributors">
+﻿// -------------------------------------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="Ninject Project Contributors">
 //   Copyright (c) 2010 bbv Software Services AG. All rights reserved.
 //   Copyright (c) 2010-2017 Ninject Project Contributors. All rights reserved.
 //
@@ -19,14 +19,6 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace Ninject.Extensions.NamedScope
-{
-    using Ninject.Infrastructure.Disposal;
+using System;
 
-    /// <summary>
-    /// An object that notifies when ti is disposed.
-    /// </summary>
-    public class DisposeNotifyingObject : DisposableObject
-    {
-    }
-}
+[assembly: CLSCompliant(true)]
